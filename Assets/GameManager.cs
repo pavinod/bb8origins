@@ -16,7 +16,9 @@ public class GameManager : Photon.MonoBehaviour {
 	public Image bg;
 	public GameObject light;
     public MatchTimer gametimer;
-    public Dictionary<string, int> HSdict = new Dictionary<string, int>
+	public GameObject stormtrooper;
+
+	public Dictionary<string, int> HSdict = new Dictionary<string, int>
     {
         {"player1",50},
         {"player2",30}
@@ -71,6 +73,7 @@ public class GameManager : Photon.MonoBehaviour {
         controller.isControllable = true;
         mainCam.GetComponent<SmoothFollow>().target = player.transform.Find("Head");
         myPhotonView = player.GetComponent<PhotonView>();
+		stormtrooper.SetActive (true);
 
         i++;
     }
