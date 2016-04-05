@@ -8,7 +8,13 @@ public class MainMenu : MonoBehaviour
 	public Image bg;
 	//public Font font;
 	public float var1 = 500;
-	GUIStyle font;
+	public Button create;
+	public Button joinRoom;
+	public Button random;
+	public InputField playername;
+	public InputField createroom;
+	public GameObject scroller;
+	public GameObject rooms;
 	void Awake()
 	{
 		//PhotonNetwork.logLevel = NetworkLogLevel.Full;
@@ -33,103 +39,65 @@ public class MainMenu : MonoBehaviour
 
 	void OnGUI()
 	{
-		//GUI.skin.label.font = GUI.skin.button.font = GUI.skin.box.font = font;
-		//GUI.skin.label.fontSize = GUI.skin.box.fontSize = GUI.skin.button.fontSize = fontSize;
-		font = new GUIStyle();
-		font.fontSize = 26;
 		float width1 = 700;
 		float height1 = 500;
-		//	float var1 = 500;
 		int fontSize = 26;
+		//		if (GUILayout.Button("<size="+35+">Quit Game</size>", GUILayout.Width(300), GUILayout.Height(100)))
+		//		{
+		//			Application.Quit();
+		//		}
+
 		//joystick.SetActive (false);
 		if (!PhotonNetwork.connected)
-		{
+		{			
 			ShowConnectingGUI();
 			return;   //Wait for a connection
 		}
+		//populate scrollview
 
 
+		if (PhotonNetwork.GetRoomList().Length == 0)
+		{
+			random.GetComponentInChildren<Text>().text="No rooms available";
+			random.enabled = false;
+		}
+		else
+		{	
+			random.enabled = true;			
+			random.GetComponentInChildren<Text>().text="Random Room!";
+		}
 
 		if (PhotonNetwork.room != null)
 			return; //Only when we're not in a Room
 
+		create.onClick.AddListener(()=> {
 
-		GUILayout.BeginArea(new Rect((Screen.width - width1) / 2, (Screen.height - height1) / 2, width1, height1));
-
-		GUILayout.Label("<size=40>Main Menu</size>");
-
-		//Player name
-		GUILayout.BeginHorizontal();
-		GUILayout.Label("<size=35>Player name:</size>", GUILayout.Width(var1));
-		PhotonNetwork.playerName = GUILayout.TextField(PhotonNetwork.playerName);
-		if (GUI.changed)//Save name
-			PlayerPrefs.SetString("playerName", PhotonNetwork.playerName);
-		GUILayout.EndHorizontal();
-
-		GUILayout.Space(15);
-
-
-		//Join room by title
-		GUILayout.BeginHorizontal();
-		GUILayout.Label("<size=35>JOIN ROOM:</size>", GUILayout.Width(var1)	);
-		roomName = GUILayout.TextField(roomName);
-		if (GUILayout.Button("GO", GUILayout.Width(80), GUILayout.Height(35)))
-		{
-			PhotonNetwork.JoinRoom(roomName);
-		}
-		GUILayout.EndHorizontal();
-
-		//Create a room (fails if exist!)
-		GUILayout.BeginHorizontal();
-		GUILayout.Label("<size=35>CREATE ROOM:</size>", GUILayout.Width(var1));
-		roomName = GUILayout.TextField(roomName);
-		if (GUILayout.Button("GO", GUILayout.Width(80), GUILayout.Height(35)))
-		{
-			// using null as TypedLobby parameter will also use the default lobby
-			PhotonNetwork.CreateRoom(roomName, new RoomOptions() { maxPlayers = 10 }, TypedLobby.Default);
-		}
-		GUILayout.EndHorizontal();
-
-		//Join random room
-		GUILayout.BeginHorizontal();
-		GUILayout.Label("<size=35>JOIN RANDOM ROOM:</size>", GUILayout.Width(var1));
-		if (PhotonNetwork.GetRoomList().Length == 0)
-		{
-			GUILayout.Label("<size=35>..no games available...</size>", GUILayout.Width(var1));
-		}
-		else
-		{
-			if (GUILayout.Button("GO"))
-			{
-				PhotonNetwork.JoinRandomRoom();
-			}
-		}
-		GUILayout.EndHorizontal();
-
-		GUILayout.Space(30);
-		GUILayout.Label("<size=35>ROOM LISTING:</size>", GUILayout.Width(var1));
-		if (PhotonNetwork.GetRoomList().Length == 0)
-		{
-			GUILayout.Label("<size=35>..no games available..</size>", GUILayout.Width(var1));
-		}
-		else
-		{
-			//Room listing: simply call GetRoomList: no need to fetch/poll whatever!
-			scrollPos = GUILayout.BeginScrollView(scrollPos);
+			bool gotRoom=false;
+			PhotonNetwork.playerName=playername.text;
+			//if Room already exists enter room
 			foreach (RoomInfo game in PhotonNetwork.GetRoomList())
 			{
-				GUILayout.BeginHorizontal();
-				GUILayout.Label(game.name + " " + game.playerCount + "/" + game.maxPlayers, font);
-				if (GUILayout.Button("JOIN", GUILayout.Width(80), GUILayout.Height(35)))
-				{
+				if(game.name.Equals(createroom.text)){
 					PhotonNetwork.JoinRoom(game.name);
+					gotRoom=true;
+					Debug.Log(game.name + " " + game.playerCount + "/" + game.maxPlayers);
+					break;
 				}
-				GUILayout.EndHorizontal();
 			}
-			GUILayout.EndScrollView();
-		}
+			if(!gotRoom){
+				Debug.Log("Room not present");
+				PhotonNetwork.CreateRoom(createroom.text, new RoomOptions() { maxPlayers = 4 }, TypedLobby.Default);
+			}
 
-		GUILayout.EndArea();
+		});
+
+		random.onClick.AddListener(()=> {
+			//Debug.Log("random");
+			PhotonNetwork.playerName=playername.text;
+			PhotonNetwork.JoinRandomRoom();
+
+		});
+
 
 
 

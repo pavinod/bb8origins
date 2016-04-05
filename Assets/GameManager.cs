@@ -17,6 +17,8 @@ public class GameManager : Photon.MonoBehaviour {
 	public GameObject light;
     public MatchTimer gametimer;
 	public GameObject stormtrooper;
+	public GameObject lobby;
+
 
 	public Dictionary<string, int> HSdict = new Dictionary<string, int>
     {
@@ -31,7 +33,8 @@ public class GameManager : Photon.MonoBehaviour {
         //list.Add ("Player3");
         //list.Add ("Player4");
         //joystick.SetActive (true);
-		bg.enabled = false;
+		joystick.SetActive (true);
+		lobby.SetActive(false);
 		StartGame();
         
     }
@@ -83,7 +86,7 @@ public class GameManager : Photon.MonoBehaviour {
 	{
 		if (PhotonNetwork.room == null) return; //Only display this GUI when inside a room
 
-		if (GUILayout.Button("Leave Room"))
+		if (GUILayout.Button("<size="+35+">Quit</size>", GUILayout.Width(300), GUILayout.Height(100)))
 		{
 			PhotonNetwork.LeaveRoom();
 		}
