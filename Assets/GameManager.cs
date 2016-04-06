@@ -67,11 +67,21 @@ public class GameManager : Photon.MonoBehaviour {
 		object[] objs = new object[1]; // Put our bool data in an object array, to send
 		objs[0] = enabledRenderers;
 
+		// instantiate flags
+		var cube1 = PhotonNetwork.Instantiate("CubeA", new Vector3(-88, 5, -96), Quaternion.identity, 0) as GameObject;
+		myPhotonView = cube1.GetComponent<PhotonView> ();
+		var cube2 = PhotonNetwork.Instantiate("CubeB", new Vector3(100, 7, -103), Quaternion.identity, 0) as GameObject;
+		myPhotonView = cube2.GetComponent<PhotonView> ();
+		var cube3 = PhotonNetwork.Instantiate("CubeC", new Vector3(94, 7, 93), Quaternion.identity, 0) as GameObject;
+		myPhotonView = cube3.GetComponent<PhotonView> ();
+		var cube4 = PhotonNetwork.Instantiate("CubeD", new Vector3(-88, 7, 89), Quaternion.identity, 0) as GameObject;
+		myPhotonView = cube4.GetComponent<PhotonView> ();
+
         // Spawn our local player
         //PhotonNetwork.Instantiate(this.playerPrefabName, transform.position, Quaternion.identity, 0, objs);
 
         var player = PhotonNetwork.Instantiate("BB8", new Vector3(0, 10, 0), Quaternion.identity, 0) as GameObject;
-        player.gameObject.tag = "Player" + i.ToString();
+		player.gameObject.tag = "Player" + PhotonNetwork.player.ID.ToString ();
         BB8MovementScript controller = player.GetComponentInChildren<BB8MovementScript>();
         controller.isControllable = true;
         mainCam.GetComponent<SmoothFollow>().target = player.transform.Find("Head");
