@@ -7,12 +7,12 @@ public class StormTrooperControl : MonoBehaviour
 	GameObject playerGameObject;
 	NavMeshAgent nav;               // Reference to the nav mesh agent.
 	private Animator anim;
-	private 
+	//private 
 
 	void Awake ()
 	{
 		// Set up the references.
-		playerGameObject = GameObject.FindGameObjectWithTag ("BB8");
+		playerGameObject = GameObject.FindGameObjectWithTag ("Player1");
 		player = playerGameObject.transform;
 		nav = GetComponent <NavMeshAgent> ();
 		anim = GetComponent<Animator> ();
@@ -42,6 +42,7 @@ public class StormTrooperControl : MonoBehaviour
 	} 
 
 	void onCollisionEnter(Collision collision) {
+		Debug.Log ("stormtrooper catches BB8!");
 		anim.SetTrigger ("Collide");
 	}
 }
