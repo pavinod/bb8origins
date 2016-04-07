@@ -16,6 +16,7 @@ public class GameManager : Photon.MonoBehaviour {
 	public Image bg;
 	public GameObject light;
     public MatchTimer gametimer;
+    public HighScoreLogic hsl;
 	public GameObject stormtrooper;
 	public GameObject lobby;
 
