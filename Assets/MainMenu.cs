@@ -1,6 +1,7 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
 using System.Collections;
+using ExitGames.Client.Photon;
 
 public class MainMenu : MonoBehaviour
 {
@@ -15,6 +16,10 @@ public class MainMenu : MonoBehaviour
 	public InputField createroom;
 	public GameObject scroller;
 	public GameObject rooms;
+    private ExitGames.Client.Photon.Hashtable roomProps = new ExitGames.Client.Photon.Hashtable() { {"p1", 3 } };
+    string[] roomPropsInLobby = {"p1", "p2", "p3", "p4"};
+    private TypedLobby defaultLobby = new TypedLobby("dexterlobby", LobbyType.Default);
+
 	void Awake()
 	{
 		//PhotonNetwork.logLevel = NetworkLogLevel.Full;
@@ -85,8 +90,9 @@ public class MainMenu : MonoBehaviour
 				}
 			}
 			if(!gotRoom){
-				Debug.Log("Room not present");
-				PhotonNetwork.CreateRoom(createroom.text, new RoomOptions() { maxPlayers = 4 }, TypedLobby.Default);
+				//Debug.Log("Room not present");
+                RoomOptions roomOptions = new RoomOptions() { isVisible = true, maxPlayers = 4, customRoomProperties = roomProps, customRoomPropertiesForLobby = roomPropsInLobby };
+                PhotonNetwork.CreateRoom(createroom.text, roomOptions, defaultLobby);
 			}
 
 		});
