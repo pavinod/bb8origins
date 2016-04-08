@@ -2,7 +2,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-
+using ExitGames.Client.Photon;
+using System;
 
 public class GameManager : Photon.MonoBehaviour {
 
@@ -16,15 +17,10 @@ public class GameManager : Photon.MonoBehaviour {
 	public Image bg;
 	public GameObject light;
     public MatchTimer gametimer;
+    public HighScoreLogic hsl;
 	public GameObject stormtrooper;
 	public GameObject lobby;
 
-
-	public Dictionary<string, int> HSdict = new Dictionary<string, int>
-    {
-        {"player1",50},
-        {"player2",30}
-    };
 
     void OnJoinedRoom()
 	{
@@ -51,7 +47,13 @@ public class GameManager : Photon.MonoBehaviour {
        
 	}
 
-	void StartGame()
+    void Update()
+    {
+        if (hsl.gotCube) { hsl.updatePlayerScore(); hsl.gotCube = false; }
+    }
+
+ 
+    void StartGame()
 	{
         int i = 1;
         List<string> list = new List<string>() { "Player1", "Player2", "Player3", "Player4" };
@@ -61,17 +63,27 @@ public class GameManager : Photon.MonoBehaviour {
 
 		//prepare instantiation data for the viking: Randomly diable the axe and/or shield
 		bool[] enabledRenderers = new bool[2];
-		enabledRenderers[0] = Random.Range(0,2)==0;//Axe
-		enabledRenderers[1] = Random.Range(0, 2) == 0; ;//Shield
+		enabledRenderers[0] = UnityEngine.Random.Range(0,2)==0;//Axe
+		enabledRenderers[1] = UnityEngine.Random.Range(0, 2) == 0; ;//Shield
 
 		object[] objs = new object[1]; // Put our bool data in an object array, to send
 		objs[0] = enabledRenderers;
+
+		// instantiate flags
+		var cube1 = PhotonNetwork.Instantiate("CubeA", new Vector3(-88, 5, -96), Quaternion.identity, 0) as GameObject;
+		myPhotonView = cube1.GetComponent<PhotonView> ();
+		var cube2 = PhotonNetwork.Instantiate("CubeB", new Vector3(100, 7, -103), Quaternion.identity, 0) as GameObject;
+		myPhotonView = cube2.GetComponent<PhotonView> ();
+		var cube3 = PhotonNetwork.Instantiate("CubeC", new Vector3(94, 7, 93), Quaternion.identity, 0) as GameObject;
+		myPhotonView = cube3.GetComponent<PhotonView> ();
+		var cube4 = PhotonNetwork.Instantiate("CubeD", new Vector3(-88, 7, 89), Quaternion.identity, 0) as GameObject;
+		myPhotonView = cube4.GetComponent<PhotonView> ();
 
         // Spawn our local player
         //PhotonNetwork.Instantiate(this.playerPrefabName, transform.position, Quaternion.identity, 0, objs);
 
         var player = PhotonNetwork.Instantiate("BB8", new Vector3(0, 10, 0), Quaternion.identity, 0) as GameObject;
-        player.gameObject.tag = "Player" + i.ToString();
+		player.gameObject.tag = "Player" + PhotonNetwork.player.ID.ToString ();
         BB8MovementScript controller = player.GetComponentInChildren<BB8MovementScript>();
         controller.isControllable = true;
         mainCam.GetComponent<SmoothFollow>().target = player.transform.Find("Head");
@@ -91,7 +103,7 @@ public class GameManager : Photon.MonoBehaviour {
 			PhotonNetwork.LeaveRoom();
 		}
 
-        if (gametimer.IsItTimeYet) { ShowHighScoreGUI(HSdict); }
+        if (gametimer.IsItTimeYet) { ShowHighScoreGUI(); }
     }
 
 	void OnDisconnectedFromPhoton()
@@ -99,13 +111,13 @@ public class GameManager : Photon.MonoBehaviour {
 		Debug.LogWarning("OnDisconnectedFromPhoton");
 	}
 
-    void ShowHighScoreGUI(Dictionary<string, int> HSdict)
+    void ShowHighScoreGUI()
     {
-        Dictionary<string, int> myDic = HSdict;
         float width1 = 400;
         float height1 = 300;
         float var1 = 200;
 
+        //header of highscore
         GUILayout.BeginArea(new Rect((Screen.width - width1) / 2, (Screen.height - height1) / 2, width1, height1));
         GUILayout.Label("<size=40>Highscore</size>");
         //padding
@@ -117,16 +129,20 @@ public class GameManager : Photon.MonoBehaviour {
         GUILayout.EndHorizontal();
 
 
-
-        foreach (KeyValuePair<string, int> entry in myDic)
-        {
-            // do something with entry.Value or entry.Key
-            GUILayout.BeginHorizontal();
-            GUILayout.Label(entry.Key, GUILayout.Width(var1));
-            GUILayout.Label(entry.Value.ToString(), GUILayout.Width(var1));
-            GUILayout.EndHorizontal();
-        }
-
+        ExitGames.Client.Photon.Hashtable dict = PhotonNetwork.room.customProperties;
+        //Debug.Log(dict);
+        
+        //display individual player score
+            foreach (DictionaryEntry scoreentry in dict)
+            {
+            if (!(scoreentry.Key.ToString().Equals("st")))
+            {
+                GUILayout.BeginHorizontal();
+                GUILayout.Label(scoreentry.Key.ToString(), GUILayout.Width(var1));
+                GUILayout.Label(scoreentry.Value.ToString(), GUILayout.Width(var1));
+                GUILayout.EndHorizontal();
+            }
+          }
 
         GUILayout.EndArea();
     }
