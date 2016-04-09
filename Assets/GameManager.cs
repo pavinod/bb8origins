@@ -17,7 +17,6 @@ public class GameManager : Photon.MonoBehaviour {
 	public Image bg;
 	public GameObject light;
     public MatchTimer gametimer;
-    public HighScoreLogic hsl;
 	public GameObject stormtrooper;
 	public GameObject lobby;
 
@@ -46,11 +45,6 @@ public class GameManager : Photon.MonoBehaviour {
 		Application.LoadLevel(Application.loadedLevel);
        
 	}
-
-    void Update()
-    {
-        if (hsl.gotCube) { hsl.updatePlayerScore(); hsl.gotCube = false; }
-    }
 
  
     void StartGame()
@@ -83,6 +77,7 @@ public class GameManager : Photon.MonoBehaviour {
         //PhotonNetwork.Instantiate(this.playerPrefabName, transform.position, Quaternion.identity, 0, objs);
 
         var player = PhotonNetwork.Instantiate("BB8", new Vector3(0, 10, 0), Quaternion.identity, 0) as GameObject;
+        //try to use this id for player calling
 		player.gameObject.tag = "Player" + PhotonNetwork.player.ID.ToString ();
         BB8MovementScript controller = player.GetComponentInChildren<BB8MovementScript>();
         controller.isControllable = true;
@@ -130,12 +125,12 @@ public class GameManager : Photon.MonoBehaviour {
 
 
         ExitGames.Client.Photon.Hashtable dict = PhotonNetwork.room.customProperties;
-        //Debug.Log(dict);
+        Debug.Log(dict);
         
         //display individual player score
             foreach (DictionaryEntry scoreentry in dict)
             {
-            if (!(scoreentry.Key.ToString().Equals("st")))
+			if (!(scoreentry.Key.ToString().Equals("st")) && !(scoreentry.Key.ToString().Equals("p1")))
             {
                 GUILayout.BeginHorizontal();
                 GUILayout.Label(scoreentry.Key.ToString(), GUILayout.Width(var1));

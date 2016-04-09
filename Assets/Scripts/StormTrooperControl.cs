@@ -6,7 +6,7 @@ public class StormTrooperControl : MonoBehaviour
 	Transform player;               // Reference to the player's position.
 	GameObject playerGameObject;
 	NavMeshAgent nav;               // Reference to the nav mesh agent.
-	private Animator anim;
+	public Animator anim;
 	//private 
 
 	void Awake ()

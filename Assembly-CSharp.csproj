@@ -62,6 +62,7 @@
      <Compile Include="Assets\CNControls\Scripts\Controllers\Touchpad.cs" />
      <Compile Include="Assets\Camera.cs" />
      <Compile Include="Assets\DetectCharacter\CCTVPlayerDetection.cs" />
+     <Compile Include="Assets\DetectCharacter\HighScoreLogic.cs" />
      <Compile Include="Assets\DetectCharacter\LastPlayerSighting.cs" />
      <Compile Include="Assets\DetectCharacter\Trigger.cs" />
      <Compile Include="Assets\Game Start UI\InstructionFlyIn.cs" />
