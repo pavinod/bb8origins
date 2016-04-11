@@ -7,12 +7,13 @@ public class StormTrooperControl : MonoBehaviour
 	GameObject playerGameObject;
 	NavMeshAgent nav;               // Reference to the nav mesh agent.
 	public Animator anim;
-	public bool activate; 
+	private bool activate; 
 
 	void Awake ()
 	{
 		// Set up the references.
-		player = playerGameObject.transform;
+		//playerGameObject = GameObject.FindGameObjectWithTag ("Player1");
+		//player = playerGameObject.transform;
 		nav = GetComponent <NavMeshAgent> ();
 		anim = GetComponent<Animator> ();
 
@@ -32,6 +33,7 @@ public class StormTrooperControl : MonoBehaviour
 
 	void Update ()
 	{
+		/*
 		float speed;
 		speed = Vector3.Project (nav.desiredVelocity, transform.forward).magnitude;
 
@@ -48,7 +50,7 @@ public class StormTrooperControl : MonoBehaviour
 		else
 		{
 			nav.enabled = false;
-		}
+		}*/
 
 		if (activate) {
 			nav.SetDestination (player.position);
