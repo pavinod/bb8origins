@@ -9,6 +9,7 @@ public class StormTrooperControl : MonoBehaviour
 	public Animator anim;
 	public bool chaseBool;
 	public string playertag;
+	private bool activate; 
 
 	void Awake ()
 	{
@@ -17,12 +18,23 @@ public class StormTrooperControl : MonoBehaviour
 		player = playerGameObject.transform;
 		nav = GetComponent <NavMeshAgent> ();
 		anim = GetComponent<Animator> ();
+
+		activate = false;
+		anim.SetBool("isWalking", false);
 	}
 
+	public void Wakeup(string targetName)
+	{
+		// once a BB8 collide with cube, this function is called, and stormtrooper wakes up
+		Debug.Log ("stormstrooper wakes up");
+		playerGameObject = GameObject.FindGameObjectWithTag (targetName);
+		player = playerGameObject.transform;
+		anim.SetBool ("isWalking", true);
+		activate = true;
+	}
 
 	void Update ()
 	{
-		
 		float speed;
 		speed = Vector3.Project (nav.desiredVelocity, transform.forward).magnitude;
 
@@ -40,6 +52,13 @@ public class StormTrooperControl : MonoBehaviour
 		{
 			nav.enabled = false;
 		}
+
+		if (activate) {
+			nav.SetDestination (player.position);
+		} else {
+			nav.enabled = false;
+		}
+
 	} 
 
 	void onCollisionEnter(Collision collision) {

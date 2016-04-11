@@ -27,6 +27,7 @@ public class BB8MovementScript : Photon.MonoBehaviour
     private Vector3 m_Move;
     private bool jumpEnb;
 	public HighScoreLogic hsl;
+	public StormTrooperControl stc;
 
     void Start()
     {
@@ -85,6 +86,10 @@ public class BB8MovementScript : Photon.MonoBehaviour
                     //Debug.Log (GameObject.FindWithTag("CubeC"));
                     flag_c.SetActive(false);
 					hsl.updatePlayerScore(player.tag);
+					/*
+					 * add for stormtrooper activation
+					 */
+					ActivateStormtrooper ("Player1");
                 }
             }
             else if (player.tag == "Player2")
@@ -105,6 +110,10 @@ public class BB8MovementScript : Photon.MonoBehaviour
                     //Debug.Log (GameObject.FindWithTag("CubeC"));
                     flag_d.SetActive(false);
 					hsl.updatePlayerScore(player.tag);
+					/*
+					 * add for stormtrooper activation
+					 */
+					ActivateStormtrooper ("Player1");
                 }
             }
             else if (player.tag == "Player4")
@@ -126,6 +135,10 @@ public class BB8MovementScript : Photon.MonoBehaviour
                     //Debug.Log (GameObject.FindWithTag("CubeC"));
                     flag_a.SetActive(false);
 					hsl.updatePlayerScore(player.tag);
+					/*
+					 * add for stormtrooper activation
+					 */
+					ActivateStormtrooper ("Player1");
                 }
             }
             else if (player.tag == "Player1")
@@ -146,6 +159,10 @@ public class BB8MovementScript : Photon.MonoBehaviour
                     //Debug.Log (GameObject.FindWithTag("CubeC"));
                     flag_b.SetActive(false);
 					hsl.updatePlayerScore(player.tag);
+					/*
+					 * add for stormtrooper activation
+					 */
+					ActivateStormtrooper ("Player1");
                 }
             }
             else if (player.tag == "Player3")
@@ -157,4 +174,13 @@ public class BB8MovementScript : Photon.MonoBehaviour
             yield return new WaitForSeconds(0);
         }
     }
+
+	/*
+	 * add for stormtrooper activation
+	 */
+	void ActivateStormtrooper(string playerTag){
+		Debug.Log ("call stormtrooper activation");
+		stc.Wakeup (playerTag);
+	}
+
 }
