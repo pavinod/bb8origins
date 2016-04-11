@@ -7,12 +7,13 @@ public class StormTrooperControl : MonoBehaviour
 	GameObject playerGameObject;
 	NavMeshAgent nav;               // Reference to the nav mesh agent.
 	public Animator anim;
-	//private 
+	public bool chaseBool;
+	public string playertag;
 
 	void Awake ()
 	{
 		// Set up the references.
-		playerGameObject = GameObject.FindGameObjectWithTag ("Player1");
+		playerGameObject = GameObject.FindGameObjectWithTag (playertag);
 		player = playerGameObject.transform;
 		nav = GetComponent <NavMeshAgent> ();
 		anim = GetComponent<Animator> ();
