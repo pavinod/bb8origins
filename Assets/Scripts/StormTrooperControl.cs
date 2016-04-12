@@ -7,7 +7,7 @@ public class StormTrooperControl : MonoBehaviour
 	GameObject playerGameObject;
 	NavMeshAgent nav;               // Reference to the nav mesh agent.
 	public Animator anim;
-	private bool activate; 
+	private bool activate;  
 
 	void Awake ()
 	{
