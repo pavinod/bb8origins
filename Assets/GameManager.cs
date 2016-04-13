@@ -79,7 +79,7 @@ public class GameManager : Photon.MonoBehaviour {
         var player = PhotonNetwork.Instantiate("BB8", new Vector3(0, 10, 0), Quaternion.identity, 0) as GameObject;
         //try to use this id for player calling
 		player.gameObject.tag = "Player" + PhotonNetwork.player.ID.ToString ();
-		stormtrooper.GetComponent<StormTrooperControl>().playertag = player.gameObject.tag;
+		//stormtrooper.GetComponent<StormTrooperControl>().playertag = player.gameObject.tag;
         BB8MovementScript controller = player.GetComponentInChildren<BB8MovementScript>();
         controller.isControllable = true;
         mainCam.GetComponent<SmoothFollow>().target = player.transform.Find("Head");
