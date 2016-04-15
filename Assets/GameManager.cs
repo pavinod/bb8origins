@@ -28,7 +28,7 @@ public class GameManager : Photon.MonoBehaviour {
         //list.Add ("Player3");
         //list.Add ("Player4");
         //joystick.SetActive (true);
-		joystick.SetActive (true);
+
 		lobby.SetActive(false);
 		StartGame();
         
@@ -49,6 +49,7 @@ public class GameManager : Photon.MonoBehaviour {
  
     void StartGame()
 	{
+		
         int i = 1;
         List<string> list = new List<string>() { "Player1", "Player2", "Player3", "Player4" };
         light.SetActive(true);
@@ -92,14 +93,25 @@ public class GameManager : Photon.MonoBehaviour {
 
 	void OnGUI()
 	{
+		
 		if (PhotonNetwork.room == null) return; //Only display this GUI when inside a room
+
+		if (PhotonNetwork.room.playerCount != 4) {
+			GUILayout.BeginArea (new Rect ((Screen.width - 400) / 2, (Screen.height - 300) / 2, 400, 300));
+			GUILayout.Label ("<size=30>Waiting for " + (4 - (PhotonNetwork.room.playerCount)) + " more players</size>", GUILayout.Width (500));
+			GUILayout.EndArea ();
+
+		} else {
+		
+			joystick.SetActive (true);
+		}
 
 		if (GUILayout.Button("<size="+35+">Quit</size>", GUILayout.Width(300), GUILayout.Height(100)))
 		{
 			PhotonNetwork.LeaveRoom();
 		}
 
-        if (gametimer.IsItTimeYet) { ShowHighScoreGUI(); }
+//        if (gametimer.IsItTimeYet) { ShowHighScoreGUI(); }
     }
 
 	void OnDisconnectedFromPhoton()
@@ -142,4 +154,11 @@ public class GameManager : Photon.MonoBehaviour {
 
         GUILayout.EndArea();
     }
+//	void ShowWaitGUI()
+//	{
+//		GUILayout.BeginArea(new Rect((Screen.width - 400) / 2, (Screen.height - 300) / 2, 400, 300));
+//		GUILayout.Label("<size=35>Waiting for "+ (4-(PhotonNetwork.room.playerCount)) +" more players</size>", GUILayout.Width(var1));
+//		GUILayout.EndArea();
+//	}
+
 }

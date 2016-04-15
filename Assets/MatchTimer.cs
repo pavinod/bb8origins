@@ -7,7 +7,7 @@ public class MatchTimer : PunBehaviour
 {
     private const string TimeToStartProp = "st";
     private double timeToStart = 0.0f;
-    public double SecondsBeforeStart = 10.0f;   // set in inspector
+   	public double SecondsBeforeStart = 10.0f;   // set in inspector
      
     public bool IsItTimeYet
     {

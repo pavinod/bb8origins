@@ -28,6 +28,8 @@ public class BB8MovementScript : Photon.MonoBehaviour
     private bool jumpEnb;
 	public HighScoreLogic hsl;
 	public StormTrooperControl stc;
+	public AudioSource source;
+	public AudioClip water;
 
     void Start()
     {
@@ -41,7 +43,13 @@ public class BB8MovementScript : Photon.MonoBehaviour
         if (collision.gameObject.CompareTag("Terrain"))
         {
             jumpEnb = true;
+			Debug.Log ("on terrain");
         }
+		if (collision.gameObject.CompareTag("Water"))
+		{
+			Debug.Log ("on water");
+
+		}
     }
 
     void Update()
@@ -51,7 +59,7 @@ public class BB8MovementScript : Photon.MonoBehaviour
             rb.AddForce(new Vector3(0, jumpPower, 0));
             jumpEnb = false;
         }
-        Debug.Log(player.tag);
+        //Debug.Log(player.tag);
         //hsl.updatePlayerScore(player.tag);
     }
 

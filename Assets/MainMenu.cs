@@ -52,7 +52,6 @@ public class MainMenu : MonoBehaviour
 		//			Application.Quit();
 		//		}
 
-		//joystick.SetActive (false);
 		if (!PhotonNetwork.connected)
 		{			
 			ShowConnectingGUI();
@@ -113,7 +112,6 @@ public class MainMenu : MonoBehaviour
 	void ShowConnectingGUI()
 	{
 		GUILayout.BeginArea(new Rect((Screen.width - 400) / 2, (Screen.height - 300) / 2, 400, 300));
-
 						GUILayout.Label("<size=35>Connecting to Photon server.</size>", GUILayout.Width(var1));
 		GUILayout.EndArea();
 	}
