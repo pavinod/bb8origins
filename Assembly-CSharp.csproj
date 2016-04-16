@@ -144,6 +144,7 @@
      <Compile Include="Assets\Scripts\ThirdPersonCharacter.cs" />
      <Compile Include="Assets\Scripts\ThirdPersonUserControl.cs" />
      <Compile Include="Assets\Scripts\buoyancy.cs" />
+     <Compile Include="Assets\Scripts\flag.cs" />
      <Compile Include="Assets\ScrollableList.cs" />
      <Compile Include="Assets\SwitchScene1.cs" />
      <Compile Include="Assets\SwitchScene2.cs" />
