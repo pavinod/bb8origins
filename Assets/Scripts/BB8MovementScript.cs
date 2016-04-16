@@ -35,6 +35,9 @@ public class BB8MovementScript : Photon.MonoBehaviour
     {
         m_Cam = Camera.main.transform;
         rb = GetComponent<Rigidbody>();
+
+		GameObject stormtrooper = GameObject.FindGameObjectWithTag ("stormtrooper");
+		stc = stormtrooper.GetComponentInChildren<StormTrooperControl>();
         
     }
 
@@ -97,6 +100,7 @@ public class BB8MovementScript : Photon.MonoBehaviour
 					/*
 					 * add for stormtrooper activation
 					 */
+					Debug.Log ("player 1 get cube!!!!");
 					ActivateStormtrooper ("Player1");
                 }
             }
