@@ -98,7 +98,7 @@ public class GameManager : Photon.MonoBehaviour {
 		List<GameObject> generate = new List<GameObject> (){player, cube};
 		//try to use this id for player calling
 		generate[0].gameObject.tag = "Player" + PhotonNetwork.player.ID.ToString ();
-		generate[1].gameObject.tag = "Cube" + PhotonNetwork.player.ID.ToString ();
+		//generate[1].gameObject.tag = "Cube" + PhotonNetwork.player.ID.ToString ();
 		//generate[2].gameObject.tag = "stormtrooper" + PhotonNetwork.player.ID.ToString ();
 		//stormtrooper.GetComponent<StormTrooperControl>().playertag = player.gameObject.tag;
         BB8MovementScript controller = player.GetComponentInChildren<BB8MovementScript>();

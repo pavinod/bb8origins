@@ -18,6 +18,8 @@ public class buoyancy : MonoBehaviour
 	public bool isConcave = false;
 	public int voxelsLimit = 16;
 	public float waterLevel;
+	public AudioSource source;
+	public AudioClip clip;
 
 	private const float DAMPFER = 0.1f;
 	private const float WATER_DENSITY = 1000;
@@ -29,6 +31,7 @@ public class buoyancy : MonoBehaviour
 	private List<Vector3> voxels;
 	private bool isMeshCollider;
 	private List<Vector3[]> forces; // For drawing force gizmos
+	private bool isPlaying = false;
 
 	/// <summary>
 	/// Provides initialization.
@@ -260,27 +263,40 @@ public class buoyancy : MonoBehaviour
 		{
 			var wp = transform.TransformPoint(point);
 			float waterLevel = GetWaterLevel(wp.x, wp.z);
+			//			if (wp.y - voxelHalfHeight < waterLevel+.75) {
+			//				if (!isPlaying) {
+			//					play ();
+			//				} 
+			//			}
+			//			else {				
+			//				source.Pause ();
+			//				isPlaying = false;
+			//			}
 
-			if (wp.y - voxelHalfHeight < waterLevel)
-			{
+			if (wp.y - voxelHalfHeight < waterLevel) {
+
 				float k = (waterLevel - wp.y) / (2 * voxelHalfHeight) + 0.5f;
-				if (k > 1)
-				{
+				if (k > 1) {
 					k = 1f;
-				}
-				else if (k < 0)
-				{
+				} else if (k < 0) {
 					k = 0f;
 				}
 
-				var velocity = rb.GetPointVelocity(wp);
+				var velocity = rb.GetPointVelocity (wp);
 				var localDampingForce = -velocity * DAMPFER * rb.mass;
-				var force = localDampingForce + Mathf.Sqrt(k) * localArchimedesForce;
-				rb.AddForceAtPosition(force, wp);
+				var force = localDampingForce + Mathf.Sqrt (k) * localArchimedesForce;
+				rb.AddForceAtPosition (force, wp);
 
-				forces.Add(new[] { wp, force }); // For drawing force gizmos
-			}
+				forces.Add (new[] { wp, force }); // For drawing force gizmos
+			} 
 		}
+	}
+	private void play(){
+		if (!isPlaying) {
+			source.Play ();
+			isPlaying = true;
+		}
+
 	}
 
 	/// <summary>
