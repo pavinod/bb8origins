@@ -4,10 +4,11 @@ using System.Collections;
 public class StormTrooperControl : MonoBehaviour
 {
 	Transform player;               // Reference to the player's position.
-	GameObject playerGameObject;
+	GameObject playerGameObject;    // Refernce to a BB8
 	NavMeshAgent nav;               // Reference to the nav mesh agent.
 	public Animator anim;
-	private bool activate;  
+	private bool activate;
+	private string BB8tag = "";
 
 	void Awake ()
 	{
@@ -29,6 +30,7 @@ public class StormTrooperControl : MonoBehaviour
 		player = playerGameObject.transform;
 		anim.SetBool ("isWalking", true);
 		activate = true;
+		BB8tag = targetName;
 	}
 
 	void Update ()
@@ -60,8 +62,14 @@ public class StormTrooperControl : MonoBehaviour
 
 	} 
 
-	void onCollisionEnter(Collision collision) {
-		Debug.Log ("stormtrooper catches BB8!");
-		anim.SetTrigger ("Collide");
+	void onCollisionEnter(Collision other) {
+		// check if the collision is indeed from the target BB8
+		if (other.gameObject.tag == BB8tag) {
+			anim.SetTrigger ("Collide");
+			Debug.Log ("stormtrooper catches BB8!");
+			activate = false;
+			nav.enabled = false;
+			//TODO: call the BB8 function to give up the cobe
+		}
 	}
 }
