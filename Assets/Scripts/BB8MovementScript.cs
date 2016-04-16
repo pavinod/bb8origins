@@ -312,9 +312,12 @@ public class BB8MovementScript : Photon.MonoBehaviour
 	/*
 	 * add for stormtrooper activation
 	 */
-	void ActivateStormtrooper(string playerTag){
+	void ActivateStormtrooper(string stormtrooperTag, string BB8Tag){
 		Debug.Log ("call stormtrooper activation");
-		stc.Wakeup (playerTag);
+
+		GameObject st = GameObject.FindGameObjectWithTag (stormtrooperTag);
+		stc = st.GetComponentInChildren<StormTrooperControl> ();
+		stc.Wakeup (BB8Tag);
 	}
 
 }
