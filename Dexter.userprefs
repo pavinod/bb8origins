@@ -1,5 +1,6 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+<<<<<<< HEAD
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\flag.cs">
     <Files>
       <File FileName="Assets\Scripts\flag.cs" Line="39" Column="2" />
@@ -8,6 +9,17 @@
       <File FileName="Assets\Scripts\BB8MovementScript.cs" Line="1" Column="1" />
       <File FileName="Assets\Game Start UI\InstructionFlyIn.cs" Line="1" Column="1" />
       <File FileName="Assets\MainMenu.cs" Line="1" Column="1" />
+=======
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\GameManager.cs">
+    <Files>
+      <File FileName="Assets\GameManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\buoyancy.cs" Line="1" Column="1" />
+      <File FileName="Assets\MainMenu.cs" Line="1" Column="1" />
+      <File FileName="Assets\ScrollableList.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\BB8MovementScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\StormTrooperControl.cs" Line="1" Column="1" />
+      <File FileName="Assets\Game Start UI\InstructionFlyIn.cs" Line="1" Column="1" />
+>>>>>>> 27c0f2727831ccd1597539366b1147a8b1d1b36a
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

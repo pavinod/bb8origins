@@ -90,8 +90,10 @@ public class MainMenu : MonoBehaviour
 			}
 			if(!gotRoom){
 				//Debug.Log("Room not present");
-                RoomOptions roomOptions = new RoomOptions() { isVisible = true, maxPlayers = 4, customRoomProperties = roomProps, customRoomPropertiesForLobby = roomPropsInLobby };
-                PhotonNetwork.CreateRoom(createroom.text, roomOptions, defaultLobby);
+//                RoomOptions roomOptions = new RoomOptions() { isVisible = true, maxPlayers = 4, customRoomProperties = roomProps, customRoomPropertiesForLobby = roomPropsInLobby };
+//                PhotonNetwork.CreateRoom(createroom.text, roomOptions, defaultLobby);
+				PhotonNetwork.CreateRoom(createroom.text, new RoomOptions() { maxPlayers = 4 }, TypedLobby.Default);
+
 			}
 
 		});
