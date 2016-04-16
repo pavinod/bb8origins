@@ -20,6 +20,8 @@ public class GameManager : Photon.MonoBehaviour {
 	public GameObject stormtrooper;
 	public GameObject lobby;
 
+	private bool start = true;
+
 
     void OnJoinedRoom()
 	{
@@ -48,8 +50,18 @@ public class GameManager : Photon.MonoBehaviour {
 
  
     void StartGame()
-	{
-		
+	{	
+		//{cube's position, bb8's position, st's position}
+		List<Vector3> p1 = new List<Vector3> (){new Vector3(-102, 27, -121), new Vector3(-90, 11, -90), new Vector3(-76, 8, -76)};
+		List<Vector3> p2 = new List<Vector3> (){new Vector3(-109, 29, 51), new Vector3(-90, 11, 95), new Vector3(-83, 8, 83)};
+		List<Vector3> p3 = new List<Vector3> (){new Vector3(73, 29, 55), new Vector3(95, 11, 95), new Vector3(90, 8, 90)};
+		List<Vector3> p4 = new List<Vector3> (){new Vector3(65, 29, -145), new Vector3(90, 11, -90), new Vector3(77, 8, -95)};
+
+		Dictionary<string, List<Vector3>> dict = new Dictionary<string, List<Vector3>>();
+		dict.Add ("1", p1);
+		dict.Add ("2", p2);
+		dict.Add ("3", p3);
+		dict.Add ("4", p4);
         int i = 1;
         List<string> list = new List<string>() { "Player1", "Player2", "Player3", "Player4" };
         light.SetActive(true);
@@ -65,6 +77,7 @@ public class GameManager : Photon.MonoBehaviour {
 		objs[0] = enabledRenderers;
 
 		// instantiate flags
+		/*
 		var cube1 = PhotonNetwork.Instantiate("CubeA", new Vector3(-88, 5, -96), Quaternion.identity, 0) as GameObject;
 		myPhotonView = cube1.GetComponent<PhotonView> ();
 		var cube2 = PhotonNetwork.Instantiate("CubeB", new Vector3(100, 7, -103), Quaternion.identity, 0) as GameObject;
@@ -73,19 +86,29 @@ public class GameManager : Photon.MonoBehaviour {
 		myPhotonView = cube3.GetComponent<PhotonView> ();
 		var cube4 = PhotonNetwork.Instantiate("CubeD", new Vector3(-88, 7, 89), Quaternion.identity, 0) as GameObject;
 		myPhotonView = cube4.GetComponent<PhotonView> ();
+		*/
+		// insta
 
         // Spawn our local player
         //PhotonNetwork.Instantiate(this.playerPrefabName, transform.position, Quaternion.identity, 0, objs);
 
-        var player = PhotonNetwork.Instantiate("BB8", new Vector3(0, 10, 0), Quaternion.identity, 0) as GameObject;
-        //try to use this id for player calling
-		player.gameObject.tag = "Player" + PhotonNetwork.player.ID.ToString ();
+		var player = PhotonNetwork.Instantiate("BB8", dict[PhotonNetwork.player.ID.ToString()][1], Quaternion.identity, 0) as GameObject;
+		var cube = PhotonNetwork.Instantiate ("Cube", dict [PhotonNetwork.player.ID.ToString ()] [0], Quaternion.identity, 0) as GameObject;
+		//var st = PhotonNetwork.Instantiate("stormtrooperAI", dict[PhotonNetwork.player.ID.ToString()][2], Quaternion.identity, 0) as GameObject;
+		List<GameObject> generate = new List<GameObject> (){player, cube};
+		//try to use this id for player calling
+		generate[0].gameObject.tag = "Player" + PhotonNetwork.player.ID.ToString ();
+		generate[1].gameObject.tag = "Cube" + PhotonNetwork.player.ID.ToString ();
+		//generate[2].gameObject.tag = "stormtrooper" + PhotonNetwork.player.ID.ToString ();
 		//stormtrooper.GetComponent<StormTrooperControl>().playertag = player.gameObject.tag;
         BB8MovementScript controller = player.GetComponentInChildren<BB8MovementScript>();
         controller.isControllable = true;
         mainCam.GetComponent<SmoothFollow>().target = player.transform.Find("Head");
-        myPhotonView = player.GetComponent<PhotonView>();
-		stormtrooper.SetActive (true);
+		for (int f = 0; f < 2; f++) {
+			myPhotonView = generate[f].GetComponent<PhotonView> ();
+		}
+        //myPhotonView = player.GetComponent<PhotonView>();
+		//stormtrooper.SetActive (true);
 
         i++;
     }
@@ -98,11 +121,18 @@ public class GameManager : Photon.MonoBehaviour {
 
 		if (PhotonNetwork.room.playerCount != 4) {
 			GUILayout.BeginArea (new Rect ((Screen.width - 400) / 2, (Screen.height - 300) / 2, 400, 300));
-			GUILayout.Label ("<size=30>Waiting for " + (4 - (PhotonNetwork.room.playerCount)) + " more players</size>", GUILayout.Width (500));
+			//GUILayout.Label ("<size=30>Waiting for " + (4 - (PhotonNetwork.room.playerCount)) + " more players</size>", GUILayout.Width (500));
+			Ready();
 			GUILayout.EndArea ();
+			joystick.SetActive (false);
 
 		} else {
-		
+			if (start) {
+				GUILayout.Label ("<size=30>Ready...</size>", GUILayout.Width (500));
+				//yield WaitForSeconds(2);
+				GUILayout.Label ("<size=30>Go!!</size>", GUILayout.Width (500));
+				start = false;
+			}
 			joystick.SetActive (true);
 		}
 
@@ -113,6 +143,17 @@ public class GameManager : Photon.MonoBehaviour {
 
 //        if (gametimer.IsItTimeYet) { ShowHighScoreGUI(); }
     }
+
+	IEnumerator Ready() {
+		print(Time.time);
+		if (start) {
+			GUILayout.Label ("<size=30>Ready...</size>", GUILayout.Width (500));
+			yield return new WaitForSeconds(2);
+			GUILayout.Label ("<size=30>Go!!</size>", GUILayout.Width (500));
+			start = false;
+		}
+		print(Time.time);
+	}
 
 	void OnDisconnectedFromPhoton()
 	{

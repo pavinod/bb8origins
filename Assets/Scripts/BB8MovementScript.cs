@@ -35,9 +35,6 @@ public class BB8MovementScript : Photon.MonoBehaviour
     {
         m_Cam = Camera.main.transform;
         rb = GetComponent<Rigidbody>();
-
-		GameObject stormtrooper = GameObject.FindGameObjectWithTag ("stormtrooper");
-		stc = stormtrooper.GetComponentInChildren<StormTrooperControl>();
         
     }
 
@@ -81,111 +78,236 @@ public class BB8MovementScript : Photon.MonoBehaviour
         }
     }
 
-    IEnumerator OnTriggerEnter(Collider other)
-    {
+	IEnumerator OnTriggerEnter(Collider other)
+	{
 		hsl = gameObject.GetComponent<HighScoreLogic>();
 
-        if (other.gameObject.CompareTag("CubeA") == true)
-        {
-            if (player.tag == "Player1")
-            {
-				
-                if (flag_c.active == true)
-                {
-                    var cube3 = PhotonNetwork.Instantiate("CubeC", new Vector3(94, 7, 93), Quaternion.identity, 0) as GameObject; // re-instantiate
-                    myPhotonView = cube3.GetComponent<PhotonView>();
-                    //Debug.Log (GameObject.FindWithTag("CubeC"));
-                    flag_c.SetActive(false);
-					hsl.updatePlayerScore(player.tag);
-					/*
-					 * add for stormtrooper activation
-					 */
-					Debug.Log ("player 1 get cube!!!!");
-					ActivateStormtrooper ("Player1");
-                }
-            }
-            else if (player.tag == "Player2")
-            {
-                flag_a.SetActive(true);
-                other.gameObject.SetActive(false);
-            }
-            yield return new WaitForSeconds(0);
-        }
-        if (other.gameObject.CompareTag("CubeB") == true)
-        {
-            if (player.tag == "Player3")
-            {
-                if (flag_d.active == true)
-                {
-                    var cube2 = PhotonNetwork.Instantiate("CubeD", new Vector3(83, 8, -107), Quaternion.identity, 0) as GameObject; // re-instantiate
-                    myPhotonView = cube2.GetComponent<PhotonView>();
-                    //Debug.Log (GameObject.FindWithTag("CubeC"));
-                    flag_d.SetActive(false);
-					hsl.updatePlayerScore(player.tag);
-					/*
-					 * add for stormtrooper activation
-					 */
-					ActivateStormtrooper ("Player1");
-                }
-            }
-            else if (player.tag == "Player4")
-            {
-                flag_b.SetActive(true);
-                other.gameObject.SetActive(false);
-            }
-            yield return new WaitForSeconds(0);
-        }
+		/*##########################################################################################################################################
+        Player1's collision check
+        ##########################################################################################################################################*/
+		if(player.tag == "Player1") {
+			if(other.gameObject.CompareTag("Cube1") == true) {
+				if(flag_b.active == true){
+					flag_b.active = false;
+					var cube2 = PhotonNetwork.Instantiate("Cube2", new Vector3(-92, 10, 90), Quaternion.identity, 0) as GameObject; // re-instantiate
+					myPhotonView = cube2.GetComponent<PhotonView>();                    
+				}
+				if(flag_c.active == true) {
+					flag_c.active = false;
+					var cube3 = PhotonNetwork.Instantiate("Cube3", new Vector3(94, 7, 93), Quaternion.identity, 0) as GameObject; // re-instantiate
+					myPhotonView = cube3.GetComponent<PhotonView>(); 
+				}
+				if(flag_d.active == true) {
+					flag_d.active = false;
+					var cube4 = PhotonNetwork.Instantiate("Cube4", new Vector3(83, 8, -107), Quaternion.identity, 0) as GameObject; // re-instantiate
+					myPhotonView = cube4.GetComponent<PhotonView>();                    
+				}
+			}
+			if(other.gameObject.CompareTag("Cube2") == true) {
+				flag_b.active = true;
+				other.gameObject.SetActive(false);
+			}
+			if(other.gameObject.CompareTag("Cube3") == true) {
+				flag_c.active = true;
+				other.gameObject.SetActive(false);
+			}
+			if(other.gameObject.CompareTag("Cube4") == true) {
+				flag_d.active = true;
+				other.gameObject.SetActive(false);
+			}
 
-        if (other.gameObject.CompareTag("CubeC") == true)
-        {
-            if (player.tag == "Player2")
-            {
-                if (flag_a.active == true)
-                {
-                    var cube1 = PhotonNetwork.Instantiate("CubeA", new Vector3(92, 8, 94), Quaternion.identity, 0) as GameObject;
-                    myPhotonView = cube1.GetComponent<PhotonView>();
-                    //Debug.Log (GameObject.FindWithTag("CubeC"));
-                    flag_a.SetActive(false);
-					hsl.updatePlayerScore(player.tag);
-					/*
-					 * add for stormtrooper activation
-					 */
-					ActivateStormtrooper ("Player1");
-                }
-            }
-            else if (player.tag == "Player1")
-            {
-                flag_c.SetActive(true);
-                other.gameObject.SetActive(false);
-            }
-            yield return new WaitForSeconds(0);
-        }
-        if (other.gameObject.CompareTag("CubeD") == true)
-        {
-            if (player.tag == "Player4")
-            {
-                if (flag_b.active == true)
-                {
-                    var cube4 = PhotonNetwork.Instantiate("CubeB", new Vector3(-92, 8, 90), Quaternion.identity, 0) as GameObject; // re-instantiate
-                    myPhotonView = cube4.GetComponent<PhotonView>();
-                    //Debug.Log (GameObject.FindWithTag("CubeC"));
-                    flag_b.SetActive(false);
-					hsl.updatePlayerScore(player.tag);
-					/*
-					 * add for stormtrooper activation
-					 */
-					ActivateStormtrooper ("Player1");
-                }
-            }
-            else if (player.tag == "Player3")
-            {
-                flag_d.SetActive(true);
-                other.gameObject.SetActive(false);
+			if(other.gameObject.CompareTag("stormtrooper2") == true || other.gameObject.CompareTag("stormtrooper3") == true || 
+				other.gameObject.CompareTag("stormtrooper4") == true || other.gameObject.CompareTag("Player2") == true ||
+				other.gameObject.CompareTag("Player3") == true || other.gameObject.CompareTag("Player4") == true) {
+				if(flag_b.active == true){
+					flag_b.active = false;
+					var cube2 = PhotonNetwork.Instantiate("Cube2", new Vector3(-92, 10, 90), Quaternion.identity, 0) as GameObject; // re-instantiate
+					myPhotonView = cube2.GetComponent<PhotonView>();                    
+				}
+				if(flag_c.active == true) {
+					flag_c.active = false;
+					var cube3 = PhotonNetwork.Instantiate("Cube3", new Vector3(94, 7, 93), Quaternion.identity, 0) as GameObject; // re-instantiate
+					myPhotonView = cube3.GetComponent<PhotonView>(); 
+				}
+				if(flag_d.active == true) {
+					flag_d.active = false;
+					var cube4 = PhotonNetwork.Instantiate("Cube4", new Vector3(83, 8, -107), Quaternion.identity, 0) as GameObject; // re-instantiate
+					myPhotonView = cube4.GetComponent<PhotonView>();                    
+				}
+			}
+			yield return new WaitForSeconds (0);
+		}
 
-            }
-            yield return new WaitForSeconds(0);
-        }
-    }
+		/*##########################################################################################################################################
+        Player2's collision check
+        ##########################################################################################################################################*/
+		if(player.tag == "Player2") {
+			if(other.gameObject.CompareTag("Cube1") == true) {
+				flag_a.active = true;
+				other.gameObject.SetActive(false);
+			}
+			if(other.gameObject.CompareTag("Cube2") == true) {
+				if(flag_a.active == true){
+					flag_a.active = false;
+					var cube1 = PhotonNetwork.Instantiate("Cube1", new Vector3(92, 8, 94), Quaternion.identity, 0) as GameObject; // re-instantiate
+					myPhotonView = cube1.GetComponent<PhotonView>();                    
+				}
+				if(flag_c.active == true) {
+					flag_c.active = false;
+					var cube3 = PhotonNetwork.Instantiate("Cube3", new Vector3(94, 7, 93), Quaternion.identity, 0) as GameObject; // re-instantiate
+					myPhotonView = cube3.GetComponent<PhotonView>(); 
+				}
+				if(flag_d.active == true) {
+					flag_d.active = false;
+					var cube4 = PhotonNetwork.Instantiate("Cube4", new Vector3(83, 8, -107), Quaternion.identity, 0) as GameObject; // re-instantiate
+					myPhotonView = cube4.GetComponent<PhotonView>();                    
+				}
+			}
+			if(other.gameObject.CompareTag("Cube3") == true) {
+				flag_c.active = true;
+				other.gameObject.SetActive(false);
+			}
+			if(other.gameObject.CompareTag("Cube4") == true) {
+				flag_d.active = true;
+				other.gameObject.SetActive(false);
+			}
+
+			if(other.gameObject.CompareTag("stormtrooper1") == true || other.gameObject.CompareTag("stormtrooper3") == true || 
+				other.gameObject.CompareTag("stormtrooper4") == true || other.gameObject.CompareTag("Player1") == true ||
+				other.gameObject.CompareTag("Player3") == true || other.gameObject.CompareTag("Player4") == true) {
+				if(flag_a.active == true){
+					flag_a.active = false;
+					var cube1 = PhotonNetwork.Instantiate("Cube1", new Vector3(92, 8, 94), Quaternion.identity, 0) as GameObject; // re-instantiate
+					myPhotonView = cube1.GetComponent<PhotonView>();                    
+				}
+				if(flag_c.active == true) {
+					flag_c.active = false;
+					var cube3 = PhotonNetwork.Instantiate("Cube3", new Vector3(94, 7, 93), Quaternion.identity, 0) as GameObject; // re-instantiate
+					myPhotonView = cube3.GetComponent<PhotonView>(); 
+				}
+				if(flag_d.active == true) {
+					flag_d.active = false;
+					var cube4 = PhotonNetwork.Instantiate("Cube4", new Vector3(83, 8, -107), Quaternion.identity, 0) as GameObject; // re-instantiate
+					myPhotonView = cube4.GetComponent<PhotonView>();                    
+				}
+			}
+			yield return new WaitForSeconds (0);
+		}
+
+		/*##########################################################################################################################################
+        Player3's collision check
+        ##########################################################################################################################################*/
+		if(player.tag == "Player3") {
+			if(other.gameObject.CompareTag("Cube1") == true) {
+				flag_a.active = true;
+				other.gameObject.SetActive(false);
+			}
+			if(other.gameObject.CompareTag("Cube2") == true) {
+				flag_b.active = true;
+				other.gameObject.SetActive(false);
+			}
+			if(other.gameObject.CompareTag("Cube3") == true) {
+				if(flag_a.active == true){
+					flag_a.active = false;
+					var cube1 = PhotonNetwork.Instantiate("Cube1", new Vector3(92, 8, 94), Quaternion.identity, 0) as GameObject; // re-instantiate
+					myPhotonView = cube1.GetComponent<PhotonView>();                    
+				}
+				if(flag_b.active == true) {
+					flag_b.active = false;
+					var cube2 = PhotonNetwork.Instantiate("Cube2", new Vector3(-92, 10, 90), Quaternion.identity, 0) as GameObject; // re-instantiate
+					myPhotonView = cube2.GetComponent<PhotonView>(); 
+				}
+				if(flag_d.active == true) {
+					flag_d.active = false;
+					var cube4 = PhotonNetwork.Instantiate("Cube4", new Vector3(83, 8, -107), Quaternion.identity, 0) as GameObject; // re-instantiate
+					myPhotonView = cube4.GetComponent<PhotonView>();                    
+				}
+			}
+			if(other.gameObject.CompareTag("Cube4") == true) {
+				flag_d.active = true;
+				other.gameObject.SetActive(false);
+			}
+
+			if(other.gameObject.CompareTag("stormtrooper2") == true || other.gameObject.CompareTag("stormtrooper1") == true || 
+				other.gameObject.CompareTag("stormtrooper4") == true || other.gameObject.CompareTag("Player1") == true ||
+				other.gameObject.CompareTag("Player2") == true || other.gameObject.CompareTag("Player4") == true) {
+				if(flag_a.active == true){
+					flag_a.active = false;
+					var cube1 = PhotonNetwork.Instantiate("Cube1", new Vector3(92, 8, 94), Quaternion.identity, 0) as GameObject; // re-instantiate
+					myPhotonView = cube1.GetComponent<PhotonView>();                    
+				}
+				if(flag_b.active == true) {
+					flag_b.active = false;
+					var cube2 = PhotonNetwork.Instantiate("Cube2", new Vector3(-92, 10, 90), Quaternion.identity, 0) as GameObject; // re-instantiate
+					myPhotonView = cube2.GetComponent<PhotonView>(); 
+				}
+				if(flag_d.active == true) {
+					flag_d.active = false;
+					var cube4 = PhotonNetwork.Instantiate("Cube4", new Vector3(83, 8, -107), Quaternion.identity, 0) as GameObject; // re-instantiate
+					myPhotonView = cube4.GetComponent<PhotonView>();                    
+				}
+			}
+			yield return new WaitForSeconds (0);
+		}
+
+		/*##########################################################################################################################################
+        Player4's collision check
+        ##########################################################################################################################################*/
+		if(player.tag == "Player4") {
+			if(other.gameObject.CompareTag("Cube1") == true) {
+				flag_a.active = true;
+				other.gameObject.SetActive(false);
+			}
+			if(other.gameObject.CompareTag("Cube2") == true) {
+				flag_b.active = true;
+				other.gameObject.SetActive(false);
+			}
+			if(other.gameObject.CompareTag("Cube3") == true) {
+				flag_c.active = true;
+				other.gameObject.SetActive(false);
+			}
+			if(other.gameObject.CompareTag("Cube4") == true) {
+				if(flag_a.active == true){
+					flag_a.active = false;
+					var cube1 = PhotonNetwork.Instantiate("Cube1", new Vector3(92, 8, 94), Quaternion.identity, 0) as GameObject; // re-instantiate
+					myPhotonView = cube1.GetComponent<PhotonView>();                    
+				}
+				if(flag_b.active == true) {
+					flag_b.active = false;
+					var cube2 = PhotonNetwork.Instantiate("Cube2", new Vector3(-92, 10, 90), Quaternion.identity, 0) as GameObject; // re-instantiate
+					myPhotonView = cube2.GetComponent<PhotonView>(); 
+				}
+				if(flag_c.active == true) {
+					flag_c.active = false;
+					var cube3 = PhotonNetwork.Instantiate("Cube3", new Vector3(94, 7, 93), Quaternion.identity, 0) as GameObject; // re-instantiate
+					myPhotonView = cube3.GetComponent<PhotonView>();                    
+				}
+			}
+
+				if(other.gameObject.CompareTag("stormtrooper2") == true || other.gameObject.CompareTag("stormtrooper3") == true || 
+					other.gameObject.CompareTag("stormtrooper1") == true || other.gameObject.CompareTag("Player1") == true ||
+					other.gameObject.CompareTag("Player2") == true || other.gameObject.CompareTag("Player3") == true) {
+					if(flag_a.active == true){
+						flag_a.active = false;
+						var cube1 = PhotonNetwork.Instantiate("Cube1", new Vector3(92, 8, 94), Quaternion.identity, 0) as GameObject; // re-instantiate
+						myPhotonView = cube1.GetComponent<PhotonView>();                    
+					}
+					if(flag_b.active == true) {
+						flag_b.active = false;
+						var cube2 = PhotonNetwork.Instantiate("Cube2", new Vector3(-92, 10, 90), Quaternion.identity, 0) as GameObject; // re-instantiate
+						myPhotonView = cube2.GetComponent<PhotonView>(); 
+					}
+					if(flag_c.active == true) {
+						flag_c.active = false;
+						var cube3 = PhotonNetwork.Instantiate("Cube3", new Vector3(94, 7, 93), Quaternion.identity, 0) as GameObject; // re-instantiate
+						myPhotonView = cube3.GetComponent<PhotonView>();                    
+					}
+				}
+				yield return new WaitForSeconds (0);
+			}
+			yield return new WaitForSeconds (0);
+		}
+
 
 	/*
 	 * add for stormtrooper activation

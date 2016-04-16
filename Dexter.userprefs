@@ -1,12 +1,12 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\StormTrooperControl.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\BB8MovementScript.cs">
     <Files>
+      <File FileName="Assets\Scripts\BB8MovementScript.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\StormTrooperControl.cs" Line="55" Column="6" />
-      <File FileName="Assets\Scripts\BB8MovementScript.cs" Line="86" Column="39" />
-      <File FileName="Assets\Game Start UI\InstructionFlyIn.cs" Line="17" Column="2" />
+      <File FileName="Assets\Game Start UI\InstructionFlyIn.cs" Line="1" Column="1" />
       <File FileName="Assets\MainMenu.cs" Line="1" Column="1" />
-      <File FileName="Assets\GameManager.cs" Line="93" Column="2" />
+      <File FileName="Assets\GameManager.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
