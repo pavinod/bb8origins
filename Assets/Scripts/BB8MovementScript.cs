@@ -119,8 +119,8 @@ public class BB8MovementScript : Photon.MonoBehaviour
 				other.gameObject.SetActive(false);
 			}
 
-			if(other.gameObject.CompareTag("stormtrooper2") == true || other.gameObject.CompareTag("stormtrooper3") == true || 
-				other.gameObject.CompareTag("stormtrooper4") == true || other.gameObject.CompareTag("Player2") == true ||
+			if(other.gameObject.CompareTag("Stormtrooper2") == true || other.gameObject.CompareTag("Stormtrooper3") == true || 
+				other.gameObject.CompareTag("Stormtrooper4") == true || other.gameObject.CompareTag("Player2") == true ||
 				other.gameObject.CompareTag("Player3") == true || other.gameObject.CompareTag("Player4") == true) {
 				if(flag_b.active == true){
 					flag_b.active = false;
@@ -175,8 +175,8 @@ public class BB8MovementScript : Photon.MonoBehaviour
 				other.gameObject.SetActive(false);
 			}
 
-			if(other.gameObject.CompareTag("stormtrooper1") == true || other.gameObject.CompareTag("stormtrooper3") == true || 
-				other.gameObject.CompareTag("stormtrooper4") == true || other.gameObject.CompareTag("Player1") == true ||
+			if(other.gameObject.CompareTag("Stormtrooper1") == true || other.gameObject.CompareTag("Stormtrooper3") == true || 
+				other.gameObject.CompareTag("Stormtrooper4") == true || other.gameObject.CompareTag("Player1") == true ||
 				other.gameObject.CompareTag("Player3") == true || other.gameObject.CompareTag("Player4") == true) {
 				if(flag_a.active == true){
 					flag_a.active = false;
@@ -231,8 +231,8 @@ public class BB8MovementScript : Photon.MonoBehaviour
 				other.gameObject.SetActive(false);
 			}
 
-			if(other.gameObject.CompareTag("stormtrooper2") == true || other.gameObject.CompareTag("stormtrooper1") == true || 
-				other.gameObject.CompareTag("stormtrooper4") == true || other.gameObject.CompareTag("Player1") == true ||
+			if(other.gameObject.CompareTag("Stormtrooper2") == true || other.gameObject.CompareTag("Stormtrooper1") == true || 
+				other.gameObject.CompareTag("Stormtrooper4") == true || other.gameObject.CompareTag("Player1") == true ||
 				other.gameObject.CompareTag("Player2") == true || other.gameObject.CompareTag("Player4") == true) {
 				if(flag_a.active == true){
 					flag_a.active = false;
@@ -287,8 +287,8 @@ public class BB8MovementScript : Photon.MonoBehaviour
 				}
 			}
 
-				if(other.gameObject.CompareTag("stormtrooper2") == true || other.gameObject.CompareTag("stormtrooper3") == true || 
-					other.gameObject.CompareTag("stormtrooper1") == true || other.gameObject.CompareTag("Player1") == true ||
+				if(other.gameObject.CompareTag("Stormtrooper2") == true || other.gameObject.CompareTag("Stormtrooper3") == true || 
+					other.gameObject.CompareTag("Stormtrooper1") == true || other.gameObject.CompareTag("Player1") == true ||
 					other.gameObject.CompareTag("Player2") == true || other.gameObject.CompareTag("Player3") == true) {
 					if(flag_a.active == true){
 						flag_a.active = false;

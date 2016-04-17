@@ -15,7 +15,6 @@ public class GameManager : Photon.MonoBehaviour {
 	private PhotonView myPhotonView;
 	public GameObject joystick;
 	public Image bg;
-	public GameObject light;
     public MatchTimer gametimer;
 	public GameObject stormtrooper;
 	public GameObject lobby;
@@ -53,10 +52,10 @@ public class GameManager : Photon.MonoBehaviour {
 		playMusic.PlayLevelMusic ();
 
 		//{cube's position, bb8's position, st's position}
-		List<Vector3> p1 = new List<Vector3> (){new Vector3(-102, 27, -121), new Vector3(-90, 11, -90), new Vector3(-76, 8, -76)};
-		List<Vector3> p2 = new List<Vector3> (){new Vector3(-109, 29, 51), new Vector3(-90, 11, 95), new Vector3(-83, 8, 83)};
-		List<Vector3> p3 = new List<Vector3> (){new Vector3(73, 29, 55), new Vector3(95, 11, 95), new Vector3(90, 8, 90)};
-		List<Vector3> p4 = new List<Vector3> (){new Vector3(65, 29, -145), new Vector3(90, 11, -90), new Vector3(77, 8, -95)};
+		List<Vector3> p1 = new List<Vector3> (){new Vector3(-83, 6, -82), new Vector3(-90, 11, -90), new Vector3(-76, 8, -76)};
+		List<Vector3> p2 = new List<Vector3> (){new Vector3(-90, 8, 90), new Vector3(-90, 11, 95), new Vector3(-83, 8, 83)};
+		List<Vector3> p3 = new List<Vector3> (){new Vector3(54, 8, 94), new Vector3(95, 11, 95), new Vector3(90, 8, 90)};
+		List<Vector3> p4 = new List<Vector3> (){new Vector3(46, 8, -106), new Vector3(90, 11, -90), new Vector3(77, 8, -95)};
 
 		Dictionary<string, List<Vector3>> dict = new Dictionary<string, List<Vector3>>();
 		dict.Add ("1", p1);
@@ -65,26 +64,22 @@ public class GameManager : Photon.MonoBehaviour {
 		dict.Add ("4", p4);
         int i = 1;
         List<string> list = new List<string>() { "Player1", "Player2", "Player3", "Player4" };
-        light.SetActive(true);
 		
 		Camera.main.farClipPlane = 1000; //Main menu set this to 0.4 for a nicer BG    
 
-			var player = PhotonNetwork.Instantiate("BB8", dict[PhotonNetwork.player.ID.ToString()][1], Quaternion.identity, 0) as GameObject;
+		var player = PhotonNetwork.Instantiate("BB8", dict[PhotonNetwork.player.ID.ToString()][1], Quaternion.identity, 0) as GameObject;
 		var cube = PhotonNetwork.Instantiate ("Cube", dict [PhotonNetwork.player.ID.ToString ()] [0], Quaternion.identity, 0) as GameObject;
-		//var st = PhotonNetwork.Instantiate("stormtrooperAI", dict[PhotonNetwork.player.ID.ToString()][2], Quaternion.identity, 0) as GameObject;
-		List<GameObject> generate = new List<GameObject> (){player, cube};
+		var st = PhotonNetwork.Instantiate("StormtrooperAI", dict[PhotonNetwork.player.ID.ToString()][2], Quaternion.identity, 0) as GameObject;
+//		List<GameObject> generate = new List<GameObject> (){player, cube};
 		//try to use this id for player calling
-		generate[0].gameObject.tag = "Player" + PhotonNetwork.player.ID.ToString ();
-		generate[1].gameObject.tag = "Cube" + PhotonNetwork.player.ID.ToString ();
-		//generate[2].gameObject.tag = "stormtrooper" + PhotonNetwork.player.ID.ToString ();
+		player.gameObject.tag = "Player" + PhotonNetwork.player.ID.ToString ();
+		cube.gameObject.tag = "Cube" + PhotonNetwork.player.ID.ToString ();
+		st.gameObject.tag = "Stormtrooper" + PhotonNetwork.player.ID.ToString ();
 		//stormtrooper.GetComponent<StormTrooperControl>().playertag = player.gameObject.tag;
         BB8MovementScript controller = player.GetComponentInChildren<BB8MovementScript>();
         controller.isControllable = true;
         mainCam.GetComponent<SmoothFollow>().target = player.transform.Find("Head");
-		for (int f = 0; f < 2; f++) {
-			myPhotonView = generate[f].GetComponent<PhotonView> ();
-		}
-        //myPhotonView = player.GetComponent<PhotonView>();
+        myPhotonView = player.GetComponent<PhotonView>();
 		//stormtrooper.SetActive (true);
 
         i++;
@@ -119,7 +114,7 @@ public class GameManager : Photon.MonoBehaviour {
 //		myPhotonView = player.GetComponent<PhotonView>();
 //		stormtrooper.SetActive (true);
 
-		i++;
+//		i++;
     }
 
 
