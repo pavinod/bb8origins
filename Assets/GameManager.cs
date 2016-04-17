@@ -16,12 +16,10 @@ public class GameManager : Photon.MonoBehaviour {
 	public GameObject joystick;
 	public Image bg;
     public MatchTimer gametimer;
-	public GameObject stormtrooper;
 	public GameObject lobby;
 	private PlayMusic playMusic;
 
 	private bool start = true;
-
 
     void OnJoinedRoom()
 	{
@@ -53,9 +51,9 @@ public class GameManager : Photon.MonoBehaviour {
 
 		//{cube's position, bb8's position, st's position}
 		List<Vector3> p1 = new List<Vector3> (){new Vector3(-83, 6, -82), new Vector3(-90, 11, -90), new Vector3(-76, 8, -76)};
-		List<Vector3> p2 = new List<Vector3> (){new Vector3(-90, 8, 90), new Vector3(-90, 11, 95), new Vector3(-83, 8, 83)};
-		List<Vector3> p3 = new List<Vector3> (){new Vector3(54, 8, 94), new Vector3(95, 11, 95), new Vector3(90, 8, 90)};
-		List<Vector3> p4 = new List<Vector3> (){new Vector3(46, 8, -106), new Vector3(90, 11, -90), new Vector3(77, 8, -95)};
+		List<Vector3> p2 = new List<Vector3> (){new Vector3(-90, 7.5f, 90), new Vector3(-90, 11, 95), new Vector3(-83, 8, 83)};
+		List<Vector3> p3 = new List<Vector3> (){new Vector3(90, 7, 94), new Vector3(95, 11, 95), new Vector3(90, 8, 90)};
+		List<Vector3> p4 = new List<Vector3> (){new Vector3(84, 7, -106), new Vector3(90, 11, -90), new Vector3(77, 8, -95)};
 
 		Dictionary<string, List<Vector3>> dict = new Dictionary<string, List<Vector3>>();
 		dict.Add ("1", p1);
@@ -123,7 +121,7 @@ public class GameManager : Photon.MonoBehaviour {
 		
 		if (PhotonNetwork.room == null) return; //Only display this GUI when inside a room
 
-		if (PhotonNetwork.room.playerCount != 1) {
+		if (PhotonNetwork.room.playerCount == 1) {
 			GUILayout.BeginArea (new Rect ((Screen.width - 400) / 2, (Screen.height - 300) / 2, 400, 300));
 			GUILayout.Label ("<size=30>Waiting for " + (4 - (PhotonNetwork.room.playerCount)) + " more players</size>", GUILayout.Width (500));
 			Ready();
