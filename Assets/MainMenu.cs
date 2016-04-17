@@ -12,6 +12,7 @@ public class MainMenu : MonoBehaviour
 	public Button create;
 	public Button joinRoom;
 	public Button random;
+	public Button quit;
 	public InputField playername;
 	public InputField createroom;
 	public GameObject scroller;
@@ -47,18 +48,13 @@ public class MainMenu : MonoBehaviour
 		float width1 = 700;
 		float height1 = 500;
 		int fontSize = 26;
-		//		if (GUILayout.Button("<size="+35+">Quit Game</size>", GUILayout.Width(300), GUILayout.Height(100)))
-		//		{
-		//			Application.Quit();
-		//		}
+
 
 		if (!PhotonNetwork.connected)
 		{			
 			ShowConnectingGUI();
 			return;   //Wait for a connection
 		}
-		//populate scrollview
-
 
 		if (PhotonNetwork.GetRoomList().Length == 0)
 		{
@@ -103,6 +99,18 @@ public class MainMenu : MonoBehaviour
 			PhotonNetwork.playerName=playername.text;
 			PhotonNetwork.JoinRandomRoom();
 
+		});
+
+		quit.onClick.AddListener(()=> {
+			#if UNITY_STANDALONE
+			Application.Quit();
+			#endif
+
+			//If we are running in the editor
+			#if UNITY_EDITOR
+			//Stop playing the scene
+			UnityEditor.EditorApplication.isPlaying = false;
+			#endif
 		});
 
 

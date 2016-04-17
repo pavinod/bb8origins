@@ -19,22 +19,21 @@ public class GameManager : Photon.MonoBehaviour {
     public MatchTimer gametimer;
 	public GameObject stormtrooper;
 	public GameObject lobby;
+	private PlayMusic playMusic;
 
 	private bool start = true;
 
 
     void OnJoinedRoom()
 	{
-        //list.Add ("Player1");
-        //list.Add ("Player2");
-        //list.Add ("Player3");
-        //list.Add ("Player4");
-        //joystick.SetActive (true);
-
 		lobby.SetActive(false);
-		StartGame();
-        
+		StartGame();        
     }
+
+	void Awake(){
+		//Get a reference to PlayMusic attached to UI object
+		playMusic = GetComponent<PlayMusic> ();
+	}
 
 	IEnumerator OnLeftRoom()
 	{
@@ -51,6 +50,8 @@ public class GameManager : Photon.MonoBehaviour {
  
     void StartGame()
 	{	
+		playMusic.PlayLevelMusic ();
+
 		//{cube's position, bb8's position, st's position}
 		List<Vector3> p1 = new List<Vector3> (){new Vector3(-102, 27, -121), new Vector3(-90, 11, -90), new Vector3(-76, 8, -76)};
 		List<Vector3> p2 = new List<Vector3> (){new Vector3(-109, 29, 51), new Vector3(-90, 11, 95), new Vector3(-83, 8, 83)};
@@ -68,37 +69,13 @@ public class GameManager : Photon.MonoBehaviour {
 		
 		Camera.main.farClipPlane = 1000; //Main menu set this to 0.4 for a nicer BG    
 
-		//prepare instantiation data for the viking: Randomly diable the axe and/or shield
-		bool[] enabledRenderers = new bool[2];
-		enabledRenderers[0] = UnityEngine.Random.Range(0,2)==0;//Axe
-		enabledRenderers[1] = UnityEngine.Random.Range(0, 2) == 0; ;//Shield
-
-		object[] objs = new object[1]; // Put our bool data in an object array, to send
-		objs[0] = enabledRenderers;
-
-		// instantiate flags
-		/*
-		var cube1 = PhotonNetwork.Instantiate("CubeA", new Vector3(-88, 5, -96), Quaternion.identity, 0) as GameObject;
-		myPhotonView = cube1.GetComponent<PhotonView> ();
-		var cube2 = PhotonNetwork.Instantiate("CubeB", new Vector3(100, 7, -103), Quaternion.identity, 0) as GameObject;
-		myPhotonView = cube2.GetComponent<PhotonView> ();
-		var cube3 = PhotonNetwork.Instantiate("CubeC", new Vector3(94, 7, 93), Quaternion.identity, 0) as GameObject;
-		myPhotonView = cube3.GetComponent<PhotonView> ();
-		var cube4 = PhotonNetwork.Instantiate("CubeD", new Vector3(-88, 7, 89), Quaternion.identity, 0) as GameObject;
-		myPhotonView = cube4.GetComponent<PhotonView> ();
-		*/
-		// insta
-
-        // Spawn our local player
-        //PhotonNetwork.Instantiate(this.playerPrefabName, transform.position, Quaternion.identity, 0, objs);
-
-		var player = PhotonNetwork.Instantiate("BB8", dict[PhotonNetwork.player.ID.ToString()][1], Quaternion.identity, 0) as GameObject;
+			var player = PhotonNetwork.Instantiate("BB8", dict[PhotonNetwork.player.ID.ToString()][1], Quaternion.identity, 0) as GameObject;
 		var cube = PhotonNetwork.Instantiate ("Cube", dict [PhotonNetwork.player.ID.ToString ()] [0], Quaternion.identity, 0) as GameObject;
 		//var st = PhotonNetwork.Instantiate("stormtrooperAI", dict[PhotonNetwork.player.ID.ToString()][2], Quaternion.identity, 0) as GameObject;
 		List<GameObject> generate = new List<GameObject> (){player, cube};
 		//try to use this id for player calling
 		generate[0].gameObject.tag = "Player" + PhotonNetwork.player.ID.ToString ();
-		//generate[1].gameObject.tag = "Cube" + PhotonNetwork.player.ID.ToString ();
+		generate[1].gameObject.tag = "Cube" + PhotonNetwork.player.ID.ToString ();
 		//generate[2].gameObject.tag = "stormtrooper" + PhotonNetwork.player.ID.ToString ();
 		//stormtrooper.GetComponent<StormTrooperControl>().playertag = player.gameObject.tag;
         BB8MovementScript controller = player.GetComponentInChildren<BB8MovementScript>();
@@ -111,6 +88,38 @@ public class GameManager : Photon.MonoBehaviour {
 		//stormtrooper.SetActive (true);
 
         i++;
+
+//		// instantiate flags
+//		var cube1 = PhotonNetwork.Instantiate("CubeA", new Vector3(-88, 5, -96), Quaternion.identity, 0) as GameObject;
+//		myPhotonView = cube1.GetComponent<PhotonView> ();
+//		var cube2 = PhotonNetwork.Instantiate("CubeB", new Vector3(100, 7, -103), Quaternion.identity, 0) as GameObject;
+//		myPhotonView = cube2.GetComponent<PhotonView> ();
+//		var cube3 = PhotonNetwork.Instantiate("CubeC", new Vector3(94, 7, 93), Quaternion.identity, 0) as GameObject;
+//		myPhotonView = cube3.GetComponent<PhotonView> ();
+//		var cube4 = PhotonNetwork.Instantiate("CubeD", new Vector3(-88, 7, 89), Quaternion.identity, 0) as GameObject;
+//		myPhotonView = cube4.GetComponent<PhotonView> ();
+//
+//		// Spawn our local player
+//		//PhotonNetwork.Instantiate(this.playerPrefabName, transform.position, Quaternion.identity, 0, objs);
+//
+//		var player = PhotonNetwork.Instantiate("BB8", new Vector3(0, 10, 0), Quaternion.identity, 0) as GameObject;
+//		//try to use this id for player calling
+//
+//		//set boundary condition for player tag to stay within 4 in case new player joins room
+//		Debug.Log("Player ID "+ PhotonNetwork.player.ID );
+//		//player.gameObject.tag = "Player" + (PhotonNetwork.player.ID%4).ToString();
+//
+//
+//		player.gameObject.tag = "Player" + PhotonNetwork.player.ID.ToString ();
+//
+//		//stormtrooper.GetComponent<StormTrooperControl>().playertag = player.gameObject.tag;
+//		BB8MovementScript controller = player.GetComponentInChildren<BB8MovementScript>();
+//		controller.isControllable = true;
+//		mainCam.GetComponent<SmoothFollow>().target = player.transform.Find("Head");
+//		myPhotonView = player.GetComponent<PhotonView>();
+//		stormtrooper.SetActive (true);
+
+		i++;
     }
 
 
@@ -119,14 +128,15 @@ public class GameManager : Photon.MonoBehaviour {
 		
 		if (PhotonNetwork.room == null) return; //Only display this GUI when inside a room
 
-		if (PhotonNetwork.room.playerCount != 4) {
+		if (PhotonNetwork.room.playerCount != 1) {
 			GUILayout.BeginArea (new Rect ((Screen.width - 400) / 2, (Screen.height - 300) / 2, 400, 300));
-			//GUILayout.Label ("<size=30>Waiting for " + (4 - (PhotonNetwork.room.playerCount)) + " more players</size>", GUILayout.Width (500));
+			GUILayout.Label ("<size=30>Waiting for " + (4 - (PhotonNetwork.room.playerCount)) + " more players</size>", GUILayout.Width (500));
 			Ready();
 			GUILayout.EndArea ();
 			joystick.SetActive (false);
 
 		} else {
+			
 			if (start) {
 				GUILayout.Label ("<size=30>Ready...</size>", GUILayout.Width (500));
 				//yield WaitForSeconds(2);

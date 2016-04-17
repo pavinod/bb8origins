@@ -29,7 +29,6 @@ public class BB8MovementScript : Photon.MonoBehaviour
 	public HighScoreLogic hsl;
 	public StormTrooperControl stc;
 	public AudioSource source;
-	public AudioClip water;
 
     void Start()
     {
@@ -87,6 +86,7 @@ public class BB8MovementScript : Photon.MonoBehaviour
         ##########################################################################################################################################*/
 		if(player.tag == "Player1") {
 			if(other.gameObject.CompareTag("Cube1") == true) {
+				soundFlag ();
 				if(flag_b.active == true){
 					flag_b.active = false;
 					var cube2 = PhotonNetwork.Instantiate("Cube2", new Vector3(-92, 10, 90), Quaternion.identity, 0) as GameObject; // re-instantiate
@@ -104,14 +104,17 @@ public class BB8MovementScript : Photon.MonoBehaviour
 				}
 			}
 			if(other.gameObject.CompareTag("Cube2") == true) {
+				soundFlag ();
 				flag_b.active = true;
 				other.gameObject.SetActive(false);
 			}
 			if(other.gameObject.CompareTag("Cube3") == true) {
+				soundFlag ();
 				flag_c.active = true;
 				other.gameObject.SetActive(false);
 			}
 			if(other.gameObject.CompareTag("Cube4") == true) {
+				soundFlag ();
 				flag_d.active = true;
 				other.gameObject.SetActive(false);
 			}
@@ -312,9 +315,16 @@ public class BB8MovementScript : Photon.MonoBehaviour
 	/*
 	 * add for stormtrooper activation
 	 */
-	void ActivateStormtrooper(string playerTag){
+	void ActivateStormtrooper(string stormtrooperTag, string BB8Tag){
 		Debug.Log ("call stormtrooper activation");
-		stc.Wakeup (playerTag);
+
+		GameObject st = GameObject.FindGameObjectWithTag (stormtrooperTag);
+		stc = st.GetComponentInChildren<StormTrooperControl> ();
+		stc.Wakeup (BB8Tag);
+	}
+	//play sound when collecting flag
+	void soundFlag(){
+		source.Play ();
 	}
 
 }

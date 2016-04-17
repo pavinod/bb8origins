@@ -19,7 +19,6 @@ public class buoyancy : MonoBehaviour
 	public int voxelsLimit = 16;
 	public float waterLevel;
 	public AudioSource source;
-	public AudioClip clip;
 
 	private const float DAMPFER = 0.1f;
 	private const float WATER_DENSITY = 1000;
