@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using ExitGames.Client.Photon;
 
-public class LastPlayerSighting : MonoBehaviour {
+public class LastPlayerSighting : Photon.MonoBehaviour {
 	public Vector3 position = new Vector3 (0f, 0f, 0f);
 	public Vector3 resetPosition = new Vector3(0f, 0f, 0f);
 	public float lightHighIntensity = 0.25f;
@@ -32,8 +33,8 @@ public class LastPlayerSighting : MonoBehaviour {
 		AudioClip myClip = (AudioClip)Resources.Load ("siren");
 		sirenAudio.clip = myClip;
 		sirenAudio.loop = true;
-
 		sirenAudio.Play ();
+
 	}
 
 	public void StopSiren(){
