@@ -56,6 +56,11 @@ public class GameManager : Photon.MonoBehaviour {
 		List<Vector3> p4 = new List<Vector3> (){new Vector3(84, 7, -106), new Vector3(90, 11, -90), new Vector3(77, 8, -95)};
 
 		Dictionary<string, List<Vector3>> dict = new Dictionary<string, List<Vector3>>();
+		Dictionary<string, Color32> colorRef = new Dictionary<string, Color32> ();
+		colorRef.Add ("1", new Color32(0, 0, 255, 255));
+		colorRef.Add ("2", new Color32(255, 255, 0, 255));
+		colorRef.Add ("3", new Color32(255, 0, 0, 255));
+		colorRef.Add ("4", new Color32(0, 255, 0, 255));
 		dict.Add ("1", p1);
 		dict.Add ("2", p2);
 		dict.Add ("3", p3);
@@ -66,53 +71,18 @@ public class GameManager : Photon.MonoBehaviour {
 		Camera.main.farClipPlane = 1000; //Main menu set this to 0.4 for a nicer BG    
 
 		var player = PhotonNetwork.Instantiate("BB8", dict[PhotonNetwork.player.ID.ToString()][1], Quaternion.identity, 0) as GameObject;
-		var cube = PhotonNetwork.Instantiate ("Cube", dict [PhotonNetwork.player.ID.ToString ()] [0], Quaternion.identity, 0) as GameObject;
 		var st = PhotonNetwork.Instantiate("StormtrooperAI", dict[PhotonNetwork.player.ID.ToString()][2], Quaternion.identity, 0) as GameObject;
-//		List<GameObject> generate = new List<GameObject> (){player, cube};
 		//try to use this id for player calling
 		player.gameObject.tag = "Player" + PhotonNetwork.player.ID.ToString ();
-		cube.gameObject.tag = "Cube" + PhotonNetwork.player.ID.ToString ();
 		st.gameObject.tag = "Stormtrooper" + PhotonNetwork.player.ID.ToString ();
-		//stormtrooper.GetComponent<StormTrooperControl>().playertag = player.gameObject.tag;
+
+		player.gameObject.transform.Find("Head").GetComponent<MeshRenderer>().materials[3].color = colorRef[PhotonNetwork.player.ID.ToString()];
+		player.gameObject.transform.Find ("Head").GetComponent<MeshRenderer> ().materials [4].color = colorRef [PhotonNetwork.player.ID.ToString ()];
+
         BB8MovementScript controller = player.GetComponentInChildren<BB8MovementScript>();
         controller.isControllable = true;
         mainCam.GetComponent<SmoothFollow>().target = player.transform.Find("Head");
         myPhotonView = player.GetComponent<PhotonView>();
-		//stormtrooper.SetActive (true);
-
-        i++;
-
-//		// instantiate flags
-//		var cube1 = PhotonNetwork.Instantiate("CubeA", new Vector3(-88, 5, -96), Quaternion.identity, 0) as GameObject;
-//		myPhotonView = cube1.GetComponent<PhotonView> ();
-//		var cube2 = PhotonNetwork.Instantiate("CubeB", new Vector3(100, 7, -103), Quaternion.identity, 0) as GameObject;
-//		myPhotonView = cube2.GetComponent<PhotonView> ();
-//		var cube3 = PhotonNetwork.Instantiate("CubeC", new Vector3(94, 7, 93), Quaternion.identity, 0) as GameObject;
-//		myPhotonView = cube3.GetComponent<PhotonView> ();
-//		var cube4 = PhotonNetwork.Instantiate("CubeD", new Vector3(-88, 7, 89), Quaternion.identity, 0) as GameObject;
-//		myPhotonView = cube4.GetComponent<PhotonView> ();
-//
-//		// Spawn our local player
-//		//PhotonNetwork.Instantiate(this.playerPrefabName, transform.position, Quaternion.identity, 0, objs);
-//
-//		var player = PhotonNetwork.Instantiate("BB8", new Vector3(0, 10, 0), Quaternion.identity, 0) as GameObject;
-//		//try to use this id for player calling
-//
-//		//set boundary condition for player tag to stay within 4 in case new player joins room
-//		Debug.Log("Player ID "+ PhotonNetwork.player.ID );
-//		//player.gameObject.tag = "Player" + (PhotonNetwork.player.ID%4).ToString();
-//
-//
-//		player.gameObject.tag = "Player" + PhotonNetwork.player.ID.ToString ();
-//
-//		//stormtrooper.GetComponent<StormTrooperControl>().playertag = player.gameObject.tag;
-//		BB8MovementScript controller = player.GetComponentInChildren<BB8MovementScript>();
-//		controller.isControllable = true;
-//		mainCam.GetComponent<SmoothFollow>().target = player.transform.Find("Head");
-//		myPhotonView = player.GetComponent<PhotonView>();
-//		stormtrooper.SetActive (true);
-
-//		i++;
     }
 
 
@@ -198,11 +168,4 @@ public class GameManager : Photon.MonoBehaviour {
 
         GUILayout.EndArea();
     }
-//	void ShowWaitGUI()
-//	{
-//		GUILayout.BeginArea(new Rect((Screen.width - 400) / 2, (Screen.height - 300) / 2, 400, 300));
-//		GUILayout.Label("<size=35>Waiting for "+ (4-(PhotonNetwork.room.playerCount)) +" more players</size>", GUILayout.Width(var1));
-//		GUILayout.EndArea();
-//	}
-
 }
