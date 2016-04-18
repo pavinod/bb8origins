@@ -368,16 +368,6 @@ public class BB8MovementScript : Photon.MonoBehaviour
 	}
 
 
-	/*
-	 * add for stormtrooper activation
-	 */
-	void ActivateStormtrooper(string stormtrooperTag, string BB8Tag){
-		Debug.Log ("call stormtrooper activation");
-
-		GameObject st = GameObject.FindGameObjectWithTag (stormtrooperTag);
-		stc = st.GetComponentInChildren<StormTrooperControl> ();
-		stc.Wakeup (BB8Tag);
-	}
 	//play sound when collecting flag
 	void soundFlag(){
 //		source.Play ();
@@ -392,10 +382,15 @@ public class BB8MovementScript : Photon.MonoBehaviour
 			{"cube4", "CubeD"}
 		};
 
-		if (player.tag == "Player" + cube [cube.Length - 1]) {
-			GameObject st = GameObject.FindGameObjectWithTag ("Stormtrooper" + cube[cube.Length - 1]);
-			st.GetComponent<StormTrooperControl> ().Wakeup (playerID);
-		}
+
+		GameObject st = GameObject.FindGameObjectWithTag ("Stormtrooper" + cube[cube.Length - 1]);
+		st.GetComponent<StormTrooperControl> ().Wakeup (playerID);
+	
+
+//		if (player.tag == "Player" + cube [cube.Length - 1]) {
+//			GameObject st = GameObject.FindGameObjectWithTag ("Stormtrooper" + cube[cube.Length - 1]);
+//			st.GetComponent<StormTrooperControl> ().Wakeup (playerID);
+//		}
 
 		GameObject target = GameObject.FindGameObjectWithTag (playerID);
 		foreach(Transform child in target.transform.GetChild(0).transform) {
