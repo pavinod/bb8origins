@@ -7,7 +7,7 @@ public class StormTrooperControl : MonoBehaviour
 	GameObject playerGameObject;    // Refernce to a BB8
 	NavMeshAgent nav;               // Reference to the nav mesh agent.
 	public Animator anim;
-	private bool activate;
+	public bool activate;
 	private string BB8tag = "";
 
 	void Awake ()
@@ -35,7 +35,6 @@ public class StormTrooperControl : MonoBehaviour
 
 	void Update ()
 	{
-		/*
 		float speed;
 		speed = Vector3.Project (nav.desiredVelocity, transform.forward).magnitude;
 
@@ -45,24 +44,21 @@ public class StormTrooperControl : MonoBehaviour
 			anim.SetBool ("isWalking", false);
 		}
 
-		if(true)
+		if(activate)
 		{
+			nav.enabled = true;
+			Debug.Log (player.tag);
 			nav.SetDestination (player.position);
 		}
 		else
 		{
 			nav.enabled = false;
-		}*/
-
-		if (activate) {
-			nav.SetDestination (player.position);
-		} else {
-			nav.enabled = false;
 		}
 
 	} 
 
-	void onCollisionEnter(Collision other) {
+	void onTriggerEnter(Collider other) {
+		Debug.Log ("bump");
 		// check if the collision is indeed from the target BB8
 		if (other.gameObject.tag == BB8tag) {
 			anim.SetTrigger ("Collide");

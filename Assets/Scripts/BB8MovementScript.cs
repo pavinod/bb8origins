@@ -84,6 +84,7 @@ public class BB8MovementScript : Photon.MonoBehaviour
 
 	IEnumerator OnTriggerEnter(Collider other)
 	{
+		Debug.Log (other.gameObject.tag);
 		hsl = gameObject.GetComponent<HighScoreLogic>();
 
 		/*##########################################################################################################################################
@@ -316,6 +317,10 @@ public class BB8MovementScript : Photon.MonoBehaviour
 			{"cube4", "CubeD"}
 		};
 
+		Debug.Log ("Stormtrooper" + cube [cube.Length - 1]);
+
+		GameObject st = GameObject.FindGameObjectWithTag ("Stormtrooper" + cube[cube.Length - 1]);
+		st.GetComponent<StormTrooperControl> ().Wakeup (playerID);
 
 		GameObject target = GameObject.FindGameObjectWithTag (playerID);
 		foreach(Transform child in target.transform.GetChild(0).transform) {
@@ -337,8 +342,12 @@ public class BB8MovementScript : Photon.MonoBehaviour
 			{"cube3", "CubeC"},
 			{"cube4", "CubeD"}
 		};
+
+		GameObject st = GameObject.FindGameObjectWithTag ("Stormtrooper" + cube[cube.Length - 1]);
+		st.GetComponent<StormTrooperControl> ().activate = false;
 			
 		GameObject target = GameObject.FindGameObjectWithTag (playerID);
+
 		foreach(Transform child in target.transform.GetChild(0).transform) {
 			if (child.gameObject.tag == dict[cube]) {
 				child.gameObject.SetActive(false);
