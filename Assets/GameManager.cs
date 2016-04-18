@@ -20,6 +20,8 @@ public class GameManager : Photon.MonoBehaviour {
 	private PlayMusic playMusic;
     public MatchTimer gamestarted;
     int[] score;
+	Dictionary<string, List<Vector3>> dict = new Dictionary<string, List<Vector3>>();
+	Dictionary<string, Color32> colorRef = new Dictionary<string, Color32> ();
 
     private bool start = true;
 
@@ -57,8 +59,6 @@ public class GameManager : Photon.MonoBehaviour {
 		List<Vector3> p3 = new List<Vector3> (){new Vector3(25, 6, 15), new Vector3(46, 9, 40)};
 		List<Vector3> p4 = new List<Vector3> (){new Vector3(21, 6, -30), new Vector3(48, 9.5f, -72)};
 
-		Dictionary<string, List<Vector3>> dict = new Dictionary<string, List<Vector3>>();
-		Dictionary<string, Color32> colorRef = new Dictionary<string, Color32> ();
 		colorRef.Add ("1", new Color32(0, 0, 255, 255));
 		colorRef.Add ("2", new Color32(255, 255, 0, 255));
 		colorRef.Add ("3", new Color32(255, 0, 0, 255));
@@ -85,11 +85,7 @@ public class GameManager : Photon.MonoBehaviour {
         controller.isControllable = true;
 		mainCam.GetComponent<SmoothFollow>().target = player.transform.Find("Head");
         myPhotonView = player.GetComponent<PhotonView>();
-
-		GameObject[] playersInGame = GameObject.FindGameObjectsWithTag("TBA");
-		foreach (GameObject obj in playersInGame) {
-			Debug.Log("There is someone named: " + obj.GetComponent<PhotonView>().owner.ID + " in the game!");
-		}
+	
 		score = new int[4] { 0, 0, 0, 0 };
     }
 
@@ -99,7 +95,7 @@ public class GameManager : Photon.MonoBehaviour {
 		
 		if (PhotonNetwork.room == null) return; //Only display this GUI when inside a room
 
-		if (PhotonNetwork.room.playerCount != 1) {
+		if (PhotonNetwork.room.playerCount != 4) {
 			GUILayout.BeginArea (new Rect ((Screen.width - 400) / 2, (Screen.height - 300) / 2, 400, 300));
 			GUILayout.Label ("<size=30>Waiting for " + (4 - (PhotonNetwork.room.playerCount)) + " more players</size>", GUILayout.Width (500));
 			Ready();
@@ -115,19 +111,22 @@ public class GameManager : Photon.MonoBehaviour {
                     //yield WaitForSeconds(2);
                     GUILayout.Label("<size=30>Go!!</size>", GUILayout.Width(500));
                     start = false;
+
+					GameObject[] playersInGame = GameObject.FindGameObjectsWithTag("TBA");
+					foreach (GameObject obj in playersInGame)
+					{
+						int id = obj.GetComponent<PhotonView> ().owner.ID;
+						obj.transform.Find("Head").GetComponent<MeshRenderer>().materials[3].color = colorRef[""+id];
+						obj.transform.Find("Head").GetComponent<MeshRenderer> ().materials[4].color = colorRef[""+id];
+						obj.tag = "Player" + id;
+					}
+					GameObject[] stInGame = GameObject.FindGameObjectsWithTag("stormtrooper");
+					foreach (GameObject st in stInGame)
+					{
+						st.tag = "Stormtrooper" + st.GetComponent<PhotonView>().owner.ID;
+					}
                 }
                 joystick.SetActive(true);
-
-                GameObject[] playersInGame = GameObject.FindGameObjectsWithTag("TBA");
-                foreach (GameObject obj in playersInGame)
-                {
-                    obj.tag = "Player" + obj.GetComponent<PhotonView>().owner.ID;
-                }
-                GameObject[] stInGame = GameObject.FindGameObjectsWithTag("stormtrooper");
-                foreach (GameObject st in stInGame)
-                {
-                    st.tag = "Stormtrooper" + st.GetComponent<PhotonView>().owner.ID;
-                }
 
             }
             else
