@@ -56,10 +56,14 @@ public class ScrollableList : MonoBehaviour
 			newItem.GetComponentsInChildren<Text>()[1].text=game.name;
 			newItem.GetComponentsInChildren<Text>()[2].text= game.playerCount + "/" + game.maxPlayers;
 			newItem.GetComponentInChildren<Button> ().GetComponentInChildren<Text>().text="Join";
-			//but.GetComponentInChildren<Text>().text= "Join "+ game.name;
+            if (game.playerCount == game.maxPlayers)
+            {
+                newItem.GetComponentInChildren<Button>().enabled = false;
+            }
+            //but.GetComponentInChildren<Text>().text= "Join "+ game.name;
 
-			//Button but = GameObject.Find ("JoinRoom").GetComponent<Button> ();
-			newItem.GetComponentInChildren<Button> ().onClick.AddListener(()=> {
+            //Button but = GameObject.Find ("JoinRoom").GetComponent<Button> ();
+            newItem.GetComponentInChildren<Button> ().onClick.AddListener(()=> {
 				PhotonNetwork.JoinRoom(game.name);
 			});
 
