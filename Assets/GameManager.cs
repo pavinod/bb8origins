@@ -52,10 +52,10 @@ public class GameManager : Photon.MonoBehaviour {
 		playMusic.PlayLevelMusic ();
 
 		//{cube's position, bb8's position, st's position}
-		List<Vector3> p1 = new List<Vector3> (){new Vector3(-83, 6, -82), new Vector3(-90, 11, -90), new Vector3(-76, 8, -76)};
-		List<Vector3> p2 = new List<Vector3> (){new Vector3(-90, 7.5f, 90), new Vector3(-90, 11, 95), new Vector3(-83, 8, 83)};
-		List<Vector3> p3 = new List<Vector3> (){new Vector3(90, 7, 94), new Vector3(95, 11, 95), new Vector3(90, 8, 90)};
-		List<Vector3> p4 = new List<Vector3> (){new Vector3(84, 7, -106), new Vector3(90, 11, -90), new Vector3(77, 8, -95)};
+		List<Vector3> p1 = new List<Vector3> (){new Vector3(-29, 6, -29), new Vector3(-44.7f, 6.3f, -55.7f)};
+		List<Vector3> p2 = new List<Vector3> (){new Vector3(-20.92f, 6, 15.4f), new Vector3(-41, 13, 50)};
+		List<Vector3> p3 = new List<Vector3> (){new Vector3(25, 6, 15), new Vector3(46, 9, 40)};
+		List<Vector3> p4 = new List<Vector3> (){new Vector3(21, 6, -30), new Vector3(48, 9.5f, -72)};
 
 		Dictionary<string, List<Vector3>> dict = new Dictionary<string, List<Vector3>>();
 		Dictionary<string, Color32> colorRef = new Dictionary<string, Color32> ();
@@ -72,8 +72,8 @@ public class GameManager : Photon.MonoBehaviour {
 		
 		Camera.main.farClipPlane = 1000; //Main menu set this to 0.4 for a nicer BG    
 
-		var player = PhotonNetwork.Instantiate("BB8", dict[PhotonNetwork.player.ID.ToString()][1], Quaternion.identity, 0) as GameObject;
-		var st = PhotonNetwork.Instantiate("StormtrooperAI", dict[PhotonNetwork.player.ID.ToString()][2], Quaternion.identity, 0) as GameObject;
+		var player = PhotonNetwork.Instantiate("BB8", dict[PhotonNetwork.player.ID.ToString()][0], Quaternion.identity, 0) as GameObject;
+		var st = PhotonNetwork.Instantiate("StormtrooperAI", dict[PhotonNetwork.player.ID.ToString()][1], Quaternion.identity, 0) as GameObject;
 		//try to use this id for player calling
 		player.gameObject.tag = "Player" + PhotonNetwork.player.ID.ToString ();
 		st.gameObject.tag = "Stormtrooper" + PhotonNetwork.player.ID.ToString ();
@@ -98,7 +98,7 @@ public class GameManager : Photon.MonoBehaviour {
 		
 		if (PhotonNetwork.room == null) return; //Only display this GUI when inside a room
 
-		if (PhotonNetwork.room.playerCount !=2 ) {
+		if (PhotonNetwork.room.playerCount == 1) {
 			GUILayout.BeginArea (new Rect ((Screen.width - 400) / 2, (Screen.height - 300) / 2, 400, 300));
 			GUILayout.Label ("<size=30>Waiting for " + (4 - (PhotonNetwork.room.playerCount)) + " more players</size>", GUILayout.Width (500));
 			Ready();
