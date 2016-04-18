@@ -19,7 +19,9 @@ public class GameManager : Photon.MonoBehaviour {
 	public GameObject lobby;
 	private PlayMusic playMusic;
     public MatchTimer gamestarted;
-	Dictionary<string, List<Vector3>> dict = new Dictionary<string, List<Vector3>>();
+    
+
+    Dictionary<string, List<Vector3>> dict = new Dictionary<string, List<Vector3>>();
 	Dictionary<string, Color32> colorRef = new Dictionary<string, Color32> ();
 
     private bool start = true;
@@ -139,7 +141,7 @@ public class GameManager : Photon.MonoBehaviour {
 			PhotonNetwork.LeaveRoom();
 		}
 
-//        if (gametimer.IsItTimeYet) { ShowHighScoreGUI(); }
+//       if (gametimer.IsItTimeYet) { GameOverAndReload(); }
     }
 
 	IEnumerator Ready() {
@@ -153,6 +155,17 @@ public class GameManager : Photon.MonoBehaviour {
 		print(Time.time);
 	}
 
+    void GameOverAndReload()
+    {
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("<size=30>Game Over!</size>", GUILayout.Width(200));
+        GUILayout.EndHorizontal();
+
+        if(GUI.Button(new Rect(10, 10, 50, 50), "Back to main menu"))
+        {
+            Application.LoadLevel(Application.loadedLevel);
+        }
+    }
 	void OnDisconnectedFromPhoton()
 	{
 		Debug.LogWarning("OnDisconnectedFromPhoton");
