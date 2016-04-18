@@ -18,8 +18,10 @@ public class GameManager : Photon.MonoBehaviour {
     public MatchTimer gametimer;
 	public GameObject lobby;
 	private PlayMusic playMusic;
+    public MatchTimer gamestarted;
+    int[] score;
 
-	private bool start = true;
+    private bool start = true;
 
     void OnJoinedRoom()
 	{
@@ -80,7 +82,7 @@ public class GameManager : Photon.MonoBehaviour {
 		player.gameObject.transform.Find ("Head").GetComponent<MeshRenderer> ().materials [4].color = colorRef [PhotonNetwork.player.ID.ToString ()];
 
         BB8MovementScript controller = player.GetComponentInChildren<BB8MovementScript>();
-        controller.isControllable = true;
+        controller.isControllable = true;s
         mainCam.GetComponent<SmoothFollow>().target = player.transform.Find("Head");
         myPhotonView = player.GetComponent<PhotonView>();
 
@@ -96,7 +98,7 @@ public class GameManager : Photon.MonoBehaviour {
 		
 		if (PhotonNetwork.room == null) return; //Only display this GUI when inside a room
 
-		if (PhotonNetwork.room.playerCount == 1) {
+		if (PhotonNetwork.room.playerCount !=2 ) {
 			GUILayout.BeginArea (new Rect ((Screen.width - 400) / 2, (Screen.height - 300) / 2, 400, 300));
 			GUILayout.Label ("<size=30>Waiting for " + (4 - (PhotonNetwork.room.playerCount)) + " more players</size>", GUILayout.Width (500));
 			Ready();
@@ -104,23 +106,36 @@ public class GameManager : Photon.MonoBehaviour {
 			joystick.SetActive (false);
 
 		} else {
-			
-			if (start) {
-				GUILayout.Label ("<size=30>Ready...</size>", GUILayout.Width (500));
-				//yield WaitForSeconds(2);
-				GUILayout.Label ("<size=30>Go!!</size>", GUILayout.Width (500));
-				start = false;
-			}
-			joystick.SetActive (true);
+            if (gamestarted.IsItTimeYet)
+            {
+                if (start)
+                {
+                    GUILayout.Label("<size=30>Ready...</size>", GUILayout.Width(500));
+                    //yield WaitForSeconds(2);
+                    GUILayout.Label("<size=30>Go!!</size>", GUILayout.Width(500));
+                    start = false;
+                }
+                joystick.SetActive(true);
 
-			GameObject[] playersInGame = GameObject.FindGameObjectsWithTag("TBA");
-			foreach (GameObject obj in playersInGame) {
-				obj.tag = "Player" + obj.GetComponent<PhotonView> ().owner.ID;
-			}
-			GameObject[] stInGame = GameObject.FindGameObjectsWithTag("stormtrooper");
-			foreach (GameObject st in stInGame) {
-				st.tag = "Stormtrooper" + st.GetComponent<PhotonView> ().owner.ID;
-			}
+                GameObject[] playersInGame = GameObject.FindGameObjectsWithTag("TBA");
+                foreach (GameObject obj in playersInGame)
+                {
+                    obj.tag = "Player" + obj.GetComponent<PhotonView>().owner.ID;
+                }
+                GameObject[] stInGame = GameObject.FindGameObjectsWithTag("stormtrooper");
+                foreach (GameObject st in stInGame)
+                {
+                    st.tag = "Stormtrooper" + st.GetComponent<PhotonView>().owner.ID;
+                }
+
+                score = new int[4] { 0, 0, 0, 0 };
+            }
+            else
+            {
+                GUILayout.BeginArea(new Rect((Screen.width - 400) / 2, (Screen.height - 300) / 2, 400, 300));
+                GUILayout.Label("<size=30>Game starting in "+ gamestarted.SecondsUntilItsTime+"</size>", GUILayout.Width(500));
+                GUILayout.EndArea();
+            }
 		}
 
 		if (GUILayout.Button("<size="+35+">Quit</size>", GUILayout.Width(300), GUILayout.Height(100)))
@@ -189,5 +204,11 @@ public class GameManager : Photon.MonoBehaviour {
           */
 
         GUILayout.EndArea();
+    }
+
+    [PunRPC]
+    void Increment(int points, string playerID)
+    {
+        score[(int)Char.GetNumericValue(playerID[playerID.Length - 1])] += points;
     }
 }
