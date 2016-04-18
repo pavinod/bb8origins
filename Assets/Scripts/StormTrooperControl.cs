@@ -7,7 +7,7 @@ public class StormTrooperControl : MonoBehaviour
 	GameObject playerGameObject;    // Refernce to a BB8
 	NavMeshAgent nav;               // Reference to the nav mesh agent.
 	public Animator anim;
-	public bool activate;
+	bool activate;
 	private string BB8tag = "";
 
 	void Awake ()
@@ -31,6 +31,12 @@ public class StormTrooperControl : MonoBehaviour
 		anim.SetBool ("isWalking", true);
 		activate = true;
 		BB8tag = targetName;
+	}
+
+	public void Sleep()
+	{
+		activate = false;
+		nav.enabled = false;
 	}
 
 	void Update ()

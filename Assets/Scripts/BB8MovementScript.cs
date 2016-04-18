@@ -171,19 +171,16 @@ public class BB8MovementScript : Photon.MonoBehaviour
                 int count = 0;
 				if(cube_b.active){
                     count++;
-                    
                     cube_b.active = false;
 					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube2", this.gameObject.tag);              
 				}
 				if(cube_c.active) {
                     count++;
-                    
                     cube_c.active = false;
 					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube3", this.gameObject.tag);
 				}
 				if(cube_d.active) {
                     count++;
-                    
                     cube_d.active = false;
 					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube4", this.gameObject.tag);                 
 				}
@@ -203,26 +200,6 @@ public class BB8MovementScript : Photon.MonoBehaviour
 				soundFlag ();
 				cube_d.active = true;
 				myPhotonView.RPC("DeactivateFlag", PhotonTargets.All, "cube4", this.gameObject.tag);
-			}
-
-			if(other.gameObject.CompareTag("Stormtrooper2") || other.gameObject.CompareTag("Stormtrooper3") || 
-				other.gameObject.CompareTag("Stormtrooper4") || other.gameObject.CompareTag("Player2") ||
-				other.gameObject.CompareTag("Player3") || other.gameObject.CompareTag("Player4")) {
-				if(cube_b.active){
-                    
-                    cube_b.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube2", this.gameObject.tag);                    
-				}
-				if(cube_c.active) {
-                    
-                    cube_c.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube3", this.gameObject.tag);  
-				}
-				if(cube_d.active) {
-                    
-                    cube_d.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube4", this.gameObject.tag);                    
-				}
 			}
 			yield return new WaitForSeconds (0);
 		}
@@ -262,26 +239,6 @@ public class BB8MovementScript : Photon.MonoBehaviour
 				cube_d.active = true;
 				myPhotonView.RPC("DeactivateFlag", PhotonTargets.All, "cube4", this.gameObject.tag);
 			}
-
-			if(other.gameObject.CompareTag("Stormtrooper1") || other.gameObject.CompareTag("Stormtrooper3") || 
-				other.gameObject.CompareTag("Stormtrooper4") || other.gameObject.CompareTag("Player1") ||
-				other.gameObject.CompareTag("Player3") || other.gameObject.CompareTag("Player4")) {
-				if(cube_a.active){
-                    
-                    cube_a.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube1", this.gameObject.tag);                     
-				}
-				if(cube_c.active) {
-                    
-                    cube_c.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube3", this.gameObject.tag);  
-				}
-				if(cube_d.active) {
-                    
-                    cube_d.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube4", this.gameObject.tag);                   
-				}
-			}
 			yield return new WaitForSeconds (0);
 		}
 
@@ -319,26 +276,6 @@ public class BB8MovementScript : Photon.MonoBehaviour
 			if(other.gameObject.CompareTag("Cube4")) {
 				cube_d.active = true;
 				myPhotonView.RPC("DeactivateFlag", PhotonTargets.All, "cube4", this.gameObject.tag);
-			}
-
-			if(other.gameObject.CompareTag("Stormtrooper2") || other.gameObject.CompareTag("Stormtrooper1") || 
-				other.gameObject.CompareTag("Stormtrooper4") || other.gameObject.CompareTag("Player1") ||
-				other.gameObject.CompareTag("Player2") || other.gameObject.CompareTag("Player4")) {
-				if(cube_a.active){
-                    
-                    cube_a.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube1", this.gameObject.tag);                    
-				}
-				if(cube_b.active) {
-                    
-                    cube_b.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube2", this.gameObject.tag);  
-				}
-				if(cube_d.active) {
-                    
-                    cube_d.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube4", this.gameObject.tag);                   
-				}
 			}
 			yield return new WaitForSeconds (0);
 		}
@@ -378,26 +315,6 @@ public class BB8MovementScript : Photon.MonoBehaviour
 				}
                 myPhotonView.RPC("Increment", PhotonTargets.All, count, this.gameObject.tag);
             }
-
-			if(other.gameObject.CompareTag("Stormtrooper2") || other.gameObject.CompareTag("Stormtrooper3") || 
-				other.gameObject.CompareTag("Stormtrooper1") || other.gameObject.CompareTag("Player1") ||
-				other.gameObject.CompareTag("Player2") || other.gameObject.CompareTag("Player3")) {
-				if(cube_a.active){
-                    
-                    cube_a.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube1", this.gameObject.tag);  
-				}
-				if(cube_b.active) {
-                    
-                    cube_b.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube2", this.gameObject.tag);  
-				}
-				if(cube_c.active) {
-                    
-                    cube_c.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube3", this.gameObject.tag);  
-				}
-			}
 			yield return new WaitForSeconds (0);
 		}
 	}
@@ -427,11 +344,6 @@ public class BB8MovementScript : Photon.MonoBehaviour
 			{"cube4", "CubeD"}
 		};
 
-		
-		GameObject st = GameObject.FindGameObjectWithTag ("Stormtrooper" + cube[cube.Length - 1]);
-		st.GetComponent<StormTrooperControl> ().Wakeup (playerID);
-		
-
 		GameObject target = GameObject.FindGameObjectWithTag (playerID);
 		foreach(Transform child in target.transform.GetChild(0).transform) {
 			if (child.gameObject.tag == dict[cube]) {
@@ -442,6 +354,9 @@ public class BB8MovementScript : Photon.MonoBehaviour
 		if (cube == "cube2") cube2.SetActive (false);
 		if (cube == "cube3") cube3.SetActive (false);
 		if (cube == "cube4") cube4.SetActive (false);
+
+		GameObject st = GameObject.FindGameObjectWithTag ("Stormtrooper" + cube[cube.Length - 1]);
+		st.GetComponent<StormTrooperControl> ().Wakeup (playerID);
 	}
 
 	[PunRPC]
@@ -465,5 +380,8 @@ public class BB8MovementScript : Photon.MonoBehaviour
 		if (cube == "cube2") cube2.SetActive (true);
 		if (cube == "cube3") cube3.SetActive (true);
 		if (cube == "cube4") cube4.SetActive (true);
+
+		GameObject st = GameObject.FindGameObjectWithTag ("Stormtrooper" + cube[cube.Length - 1]);
+		st.GetComponent<StormTrooperControl> ().Sleep ();
 	}
 }
