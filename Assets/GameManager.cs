@@ -87,6 +87,7 @@ public class GameManager : Photon.MonoBehaviour {
 
         BB8MovementScript controller = player.GetComponentInChildren<BB8MovementScript>();
         controller.isControllable = true;
+		mainCam.GetComponent<AutoRotate> ().enabled = false;
 		mainCam.GetComponent<SmoothFollow>().target = player.transform.Find("Head");
         myPhotonView = player.GetComponent<PhotonView>();
     }
@@ -139,6 +140,7 @@ public class GameManager : Photon.MonoBehaviour {
 		}
 
 		quit.onClick.AddListener(()=> {
+			gameUI.SetActive(false);
 			PhotonNetwork.LeaveRoom();
 		});
 
