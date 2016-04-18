@@ -5,6 +5,7 @@ using CnControls;
 using UnityEngine.SceneManagement;
 using System.Threading;
 using System.Collections.Generic;
+using System;
 
 public class BB8MovementScript : Photon.MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class BB8MovementScript : Photon.MonoBehaviour
 	public HighScoreLogic hsl;
 	public StormTrooperControl stc;
 	public AudioSource source;
+	int[] score;
 
     void Start()
     {
@@ -40,15 +42,17 @@ public class BB8MovementScript : Photon.MonoBehaviour
 		cube3 = GameObject.FindGameObjectWithTag ("Cube3");
 		cube4 = GameObject.FindGameObjectWithTag ("Cube4");
 		myPhotonView = this.GetComponent<PhotonView> ();
+		score = new int[4] { 0, 0, 0, 0 };
     }
 
     void OnCollisionEnter(Collision other)
     {
 		if (other.gameObject.CompareTag("Terrain")) jumpEnb = true;
 		if(player.tag == "Player1") {
-			if(other.gameObject.CompareTag("Stormtrooper2") || other.gameObject.CompareTag("Stormtrooper3") || 
+			if(other.gameObject.CompareTag("Stormtrooper1") || other.gameObject.CompareTag("Stormtrooper2") || other.gameObject.CompareTag("Stormtrooper3") || 
 				other.gameObject.CompareTag("Stormtrooper4") || other.gameObject.CompareTag("Player2") ||
 				other.gameObject.CompareTag("Player3") || other.gameObject.CompareTag("Player4")) {
+
 				if(cube_b.active){
 					cube_b.active = false;
 					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube2", this.gameObject.tag);                    
@@ -68,7 +72,7 @@ public class BB8MovementScript : Photon.MonoBehaviour
         Player2's collision check
         ##########################################################################################################################################*/
 		if(player.tag == "Player2") {
-			if(other.gameObject.CompareTag("Stormtrooper1") || other.gameObject.CompareTag("Stormtrooper3") || 
+			if(other.gameObject.CompareTag("Stormtrooper1") || other.gameObject.CompareTag("Stormtrooper2") || other.gameObject.CompareTag("Stormtrooper3") || 
 				other.gameObject.CompareTag("Stormtrooper4") || other.gameObject.CompareTag("Player1") ||
 				other.gameObject.CompareTag("Player3") || other.gameObject.CompareTag("Player4")) {
 				if(cube_a.active){
@@ -91,7 +95,7 @@ public class BB8MovementScript : Photon.MonoBehaviour
         ##########################################################################################################################################*/
 		if(player.tag == "Player3") {
 			if(other.gameObject.CompareTag("Stormtrooper2") || other.gameObject.CompareTag("Stormtrooper1") || 
-				other.gameObject.CompareTag("Stormtrooper4") || other.gameObject.CompareTag("Player1") ||
+				other.gameObject.CompareTag("Stormtrooper3") || other.gameObject.CompareTag("Stormtrooper4") || other.gameObject.CompareTag("Player1") ||
 				other.gameObject.CompareTag("Player2") || other.gameObject.CompareTag("Player4")) {
 				if(cube_a.active){
 					cube_a.active = false;
@@ -113,7 +117,7 @@ public class BB8MovementScript : Photon.MonoBehaviour
         ##########################################################################################################################################*/
 		if (player.tag == "Player4") {
 			if (other.gameObject.CompareTag ("Stormtrooper2") || other.gameObject.CompareTag ("Stormtrooper3") ||
-			   other.gameObject.CompareTag ("Stormtrooper1") || other.gameObject.CompareTag ("Player1") ||
+				other.gameObject.CompareTag ("Stormtrooper1") || other.gameObject.CompareTag("Stormtrooper4") || other.gameObject.CompareTag ("Player1") ||
 			   other.gameObject.CompareTag ("Player2") || other.gameObject.CompareTag ("Player3")) {
 				if (cube_a.active) {
 					cube_a.active = false;
@@ -383,5 +387,16 @@ public class BB8MovementScript : Photon.MonoBehaviour
 
 		GameObject st = GameObject.FindGameObjectWithTag ("Stormtrooper" + cube[cube.Length - 1]);
 		st.GetComponent<StormTrooperControl> ().Sleep ();
+	}
+
+	[PunRPC]
+	void Increment(int points, string playerID)
+	{
+		Debug.Log ("incremented");
+		score[(int)Char.GetNumericValue(playerID[playerID.Length - 1]) - 1] += points;
+		ScoreManager.score1 = score [0];
+		ScoreManager.score2 = score [1];
+		ScoreManager.score3 = score [2];
+		ScoreManager.score4 = score [3];
 	}
 }

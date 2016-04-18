@@ -19,7 +19,6 @@ public class GameManager : Photon.MonoBehaviour {
 	public GameObject lobby;
 	private PlayMusic playMusic;
     public MatchTimer gamestarted;
-    int[] score;
 	Dictionary<string, List<Vector3>> dict = new Dictionary<string, List<Vector3>>();
 	Dictionary<string, Color32> colorRef = new Dictionary<string, Color32> ();
 
@@ -85,8 +84,6 @@ public class GameManager : Photon.MonoBehaviour {
         controller.isControllable = true;
 		mainCam.GetComponent<SmoothFollow>().target = player.transform.Find("Head");
         myPhotonView = player.GetComponent<PhotonView>();
-	
-		score = new int[4] { 0, 0, 0, 0 };
     }
 
 
@@ -180,15 +177,15 @@ public class GameManager : Photon.MonoBehaviour {
 
 
         //ExitGames.Client.Photon.Hashtable dict = PhotonNetwork.room.customProperties;
-        Debug.Log(score);
+//        Debug.Log(score);
         
         //display individual player score
-        for (int i = 0; i< score.Length; i++){
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("Player " + i, GUILayout.Width(var1));
-            GUILayout.Label(score[i].ToString(), GUILayout.Width(var1));
-            GUILayout.EndHorizontal();
-        }
+//        for (int i = 0; i< score.Length; i++){
+//            GUILayout.BeginHorizontal();
+//            GUILayout.Label("Player " + i, GUILayout.Width(var1));
+//            GUILayout.Label(score[i].ToString(), GUILayout.Width(var1));
+//            GUILayout.EndHorizontal();
+//        }
         /*
             foreach (DictionaryEntry scoreentry in dict)
             {
@@ -205,14 +202,5 @@ public class GameManager : Photon.MonoBehaviour {
         GUILayout.EndArea();
     }
 
-    [PunRPC]
-    void Increment(int points, string playerID)
-    {
-		Debug.Log ("incremented");
-        score[(int)Char.GetNumericValue(playerID[playerID.Length - 1])] += points;
-		ScoreManager.score1 = score [0];
-		ScoreManager.score2 = score [1];
-		ScoreManager.score3 = score [2];
-		ScoreManager.score4 = score [3];
-	}
+    
 }
