@@ -53,7 +53,6 @@ public class StormTrooperControl : MonoBehaviour
 		if(activate)
 		{
 			nav.enabled = true;
-			Debug.Log (player.tag);
 			nav.SetDestination (player.position);
 		}
 		else

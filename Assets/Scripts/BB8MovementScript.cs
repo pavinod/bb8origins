@@ -393,10 +393,10 @@ public class BB8MovementScript : Photon.MonoBehaviour
 	void Increment(int points, string playerID)
 	{
 		Debug.Log ("incremented");
-		score[(int)Char.GetNumericValue(playerID[playerID.Length - 1]) - 1] += points;
-		ScoreManager.score1 = score [0];
-		ScoreManager.score2 = score [1];
-		ScoreManager.score3 = score [2];
-		ScoreManager.score4 = score [3];
+		int id = (int)Char.GetNumericValue (playerID [playerID.Length - 1]);
+		if (id == 1) ScoreManager.score1 += points;
+		if (id == 2) ScoreManager.score2 += points;
+		if (id == 3) ScoreManager.score3 += points;
+		if (id == 4) ScoreManager.score4 += points;
 	}
 }
