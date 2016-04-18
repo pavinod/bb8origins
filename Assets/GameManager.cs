@@ -15,10 +15,12 @@ public class GameManager : Photon.MonoBehaviour {
 	private PhotonView myPhotonView;
 	public GameObject joystick;
 	public Image bg;
+	public Button quit;
     public MatchTimer gametimer;
 	public GameObject lobby;
 	private PlayMusic playMusic;
     public MatchTimer gamestarted;
+	public GameObject gameUI;
     
 
     Dictionary<string, List<Vector3>> dict = new Dictionary<string, List<Vector3>>();
@@ -28,6 +30,7 @@ public class GameManager : Photon.MonoBehaviour {
 
     void OnJoinedRoom()
 	{
+		gameUI.SetActive (true);
 		lobby.SetActive(false);
 		StartGame();        
     }
@@ -88,22 +91,22 @@ public class GameManager : Photon.MonoBehaviour {
         myPhotonView = player.GetComponent<PhotonView>();
     }
 
-
 	void OnGUI()
 	{
 		
 		if (PhotonNetwork.room == null) return; //Only display this GUI when inside a room
 
 		if (PhotonNetwork.room.playerCount != 4) {
-			GUILayout.BeginArea (new Rect ((Screen.width - 400) / 2, (Screen.height - 300) / 2, 400, 300));
-			GUILayout.Label ("<size=30>Waiting for " + (4 - (PhotonNetwork.room.playerCount)) + " more players</size>", GUILayout.Width (500));
-			Ready();
-			GUILayout.EndArea ();
+			
+			ScoreManager.waitingtext = PhotonNetwork.room.playerCount + "/4 ready";
+
 			joystick.SetActive (false);
 
 		} else {
             if (gamestarted.IsItTimeYet)
             {
+				ScoreManager.waiting = false;
+
                 if (start)
                 {
                     GUILayout.Label("<size=30>Ready...</size>", GUILayout.Width(500));
@@ -126,20 +129,18 @@ public class GameManager : Photon.MonoBehaviour {
 					}
                 }
                 joystick.SetActive(true);
+				ScoreManager.start = true;
 
             }
             else
             {
-                GUILayout.BeginArea(new Rect((Screen.width - 400) / 2, (Screen.height - 300) / 2, 400, 300));
-                GUILayout.Label("<size=30>Game starting in "+ gamestarted.SecondsUntilItsTime+"</size>", GUILayout.Width(500));
-                GUILayout.EndArea();
+				ScoreManager.count = Convert.ToInt32 (gamestarted.SecondsUntilItsTime);
             }
 		}
 
-		if (GUILayout.Button("<size="+35+">Quit</size>", GUILayout.Width(300), GUILayout.Height(100)))
-		{
+		quit.onClick.AddListener(()=> {
 			PhotonNetwork.LeaveRoom();
-		}
+		});
 
 //       if (gametimer.IsItTimeYet) { GameOverAndReload(); }
     }

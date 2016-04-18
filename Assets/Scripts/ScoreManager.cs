@@ -8,6 +8,10 @@ public class ScoreManager : MonoBehaviour
 	public static int score2;
 	public static int score3;
 	public static int score4;
+	public static bool waiting;
+	public static string waitingtext;
+	public static bool start;
+	public static int count;
 
 
 	Text text;                      // Reference to the Text component.
@@ -23,12 +27,19 @@ public class ScoreManager : MonoBehaviour
 		score2 = 0;
 		score3 = 0;
 		score4 = 0;
+		count = 5;
 	}
 
 
 	void Update ()
 	{
 		// Set the displayed text to be the word "Score" followed by the score value.
-		text.text = score1 + "    " + score2 + "    " + score3 + "    " + score4;
+		if (start) {
+			text.text = score1 + "       " + score2 + "       " + score3 + "       " + score4;
+		} else if (!waiting) {
+			text.text = waitingtext;
+		} else {
+			text.text = "" + count;
+		}
 	}
 }

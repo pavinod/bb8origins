@@ -60,12 +60,5 @@ public class MatchTimer : PunBehaviour
             //Debug.Log("Got StartTime: " + this.timeToStart + " is it time yet?! " + this.IsItTimeYet);
         }
     }
-
-    
-    void OnGUI()
-    {
-        GUILayout.Label("Is it time yet: " + this.IsItTimeYet);
-        GUILayout.Label("Seconds until it's time: " + (float)this.SecondsUntilItsTime);
-    }
     
 }
