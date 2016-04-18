@@ -180,10 +180,17 @@ public class GameManager : Photon.MonoBehaviour {
         GUILayout.EndHorizontal();
 
 
-        ExitGames.Client.Photon.Hashtable dict = PhotonNetwork.room.customProperties;
-        Debug.Log(dict);
+        //ExitGames.Client.Photon.Hashtable dict = PhotonNetwork.room.customProperties;
+        Debug.Log(score);
         
         //display individual player score
+        for (int i = 0; i< score.Length; i++){
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Player " + i, GUILayout.Width(var1));
+            GUILayout.Label(score[i].ToString(), GUILayout.Width(var1));
+            GUILayout.EndHorizontal();
+        }
+        /*
             foreach (DictionaryEntry scoreentry in dict)
             {
 			if (!(scoreentry.Key.ToString().Equals("st")) && !(scoreentry.Key.ToString().Equals("p1")))
@@ -194,6 +201,7 @@ public class GameManager : Photon.MonoBehaviour {
                 GUILayout.EndHorizontal();
             }
           }
+          */
 
         GUILayout.EndArea();
     }
