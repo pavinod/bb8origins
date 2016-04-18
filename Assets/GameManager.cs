@@ -83,6 +83,11 @@ public class GameManager : Photon.MonoBehaviour {
         controller.isControllable = true;
         mainCam.GetComponent<SmoothFollow>().target = player.transform.Find("Head");
         myPhotonView = player.GetComponent<PhotonView>();
+
+		GameObject[] playersInGame = GameObject.FindGameObjectsWithTag("TBA");
+		foreach (GameObject obj in playersInGame) {
+			Debug.Log("There is someone named: " + obj.GetComponent<PhotonView>().owner.ID + " in the game!");
+		}
     }
 
 
@@ -107,6 +112,15 @@ public class GameManager : Photon.MonoBehaviour {
 				start = false;
 			}
 			joystick.SetActive (true);
+
+			GameObject[] playersInGame = GameObject.FindGameObjectsWithTag("TBA");
+			foreach (GameObject obj in playersInGame) {
+				obj.tag = "Player" + obj.GetComponent<PhotonView> ().owner.ID;
+			}
+			GameObject[] stInGame = GameObject.FindGameObjectsWithTag("stormtrooper");
+			foreach (GameObject st in stInGame) {
+				st.tag = "Stormtrooper" + st.GetComponent<PhotonView> ().owner.ID;
+			}
 		}
 
 		if (GUILayout.Button("<size="+35+">Quit</size>", GUILayout.Width(300), GUILayout.Height(100)))
