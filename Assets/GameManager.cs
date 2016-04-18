@@ -82,8 +82,8 @@ public class GameManager : Photon.MonoBehaviour {
 		player.gameObject.transform.Find ("Head").GetComponent<MeshRenderer> ().materials [4].color = colorRef [PhotonNetwork.player.ID.ToString ()];
 
         BB8MovementScript controller = player.GetComponentInChildren<BB8MovementScript>();
-        controller.isControllable = true;s
-        mainCam.GetComponent<SmoothFollow>().target = player.transform.Find("Head");
+        controller.isControllable = true;
+		mainCam.GetComponent<SmoothFollow>().target = player.transform.Find("Head");
         myPhotonView = player.GetComponent<PhotonView>();
 
 		GameObject[] playersInGame = GameObject.FindGameObjectsWithTag("TBA");
