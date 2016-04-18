@@ -57,11 +57,11 @@ public class StormTrooperControl : MonoBehaviour
 
 	} 
 
-	void onTriggerEnter(Collider other) {
+	void OnCollisionEnter(Collision collision) {
 		Debug.Log ("bump");
+		anim.SetTrigger ("Collide");
 		// check if the collision is indeed from the target BB8
-		if (other.gameObject.tag == BB8tag) {
-			anim.SetTrigger ("Collide");
+		if (collision.gameObject.tag == BB8tag) {
 			Debug.Log ("stormtrooper catches BB8!");
 			activate = false;
 			nav.enabled = false;

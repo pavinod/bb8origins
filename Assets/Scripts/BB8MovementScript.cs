@@ -42,17 +42,92 @@ public class BB8MovementScript : Photon.MonoBehaviour
 		myPhotonView = this.GetComponent<PhotonView> ();
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision other)
     {
-        if (collision.gameObject.CompareTag("Terrain"))
-        {
-            jumpEnb = true;
-			Debug.Log ("on terrain");
-        }
-		if (collision.gameObject.CompareTag("Water"))
-		{
-			Debug.Log ("on water");
+		if (other.gameObject.CompareTag("Terrain")) jumpEnb = true;
+		if(player.tag == "Player1") {
+			if(other.gameObject.CompareTag("Stormtrooper2") || other.gameObject.CompareTag("Stormtrooper3") || 
+				other.gameObject.CompareTag("Stormtrooper4") || other.gameObject.CompareTag("Player2") ||
+				other.gameObject.CompareTag("Player3") || other.gameObject.CompareTag("Player4")) {
+				if(cube_b.active){
+					cube_b.active = false;
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube2", this.gameObject.tag);                    
+				}
+				if(cube_c.active) {
+					cube_c.active = false;
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube3", this.gameObject.tag);  
+				}
+				if(cube_d.active) {
+					cube_d.active = false;
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube4", this.gameObject.tag);                    
+				}
+			}
+		}
 
+		/*##########################################################################################################################################
+        Player2's collision check
+        ##########################################################################################################################################*/
+		if(player.tag == "Player2") {
+			if(other.gameObject.CompareTag("Stormtrooper1") || other.gameObject.CompareTag("Stormtrooper3") || 
+				other.gameObject.CompareTag("Stormtrooper4") || other.gameObject.CompareTag("Player1") ||
+				other.gameObject.CompareTag("Player3") || other.gameObject.CompareTag("Player4")) {
+				if(cube_a.active){
+					cube_a.active = false;
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube1", this.gameObject.tag);                     
+				}
+				if(cube_c.active) {
+					cube_c.active = false;
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube3", this.gameObject.tag);  
+				}
+				if(cube_d.active) {
+					cube_d.active = false;
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube4", this.gameObject.tag);                   
+				}
+			}
+		}
+
+		/*##########################################################################################################################################
+        Player3's collision check
+        ##########################################################################################################################################*/
+		if(player.tag == "Player3") {
+			if(other.gameObject.CompareTag("Stormtrooper2") || other.gameObject.CompareTag("Stormtrooper1") || 
+				other.gameObject.CompareTag("Stormtrooper4") || other.gameObject.CompareTag("Player1") ||
+				other.gameObject.CompareTag("Player2") || other.gameObject.CompareTag("Player4")) {
+				if(cube_a.active){
+					cube_a.active = false;
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube1", this.gameObject.tag);                    
+				}
+				if(cube_b.active) {
+					cube_b.active = false;
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube2", this.gameObject.tag);  
+				}
+				if(cube_d.active) {
+					cube_d.active = false;
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube4", this.gameObject.tag);                   
+				}
+			}
+		}
+
+		/*##########################################################################################################################################
+        Player4's collision check
+        ##########################################################################################################################################*/
+		if (player.tag == "Player4") {
+			if (other.gameObject.CompareTag ("Stormtrooper2") || other.gameObject.CompareTag ("Stormtrooper3") ||
+			   other.gameObject.CompareTag ("Stormtrooper1") || other.gameObject.CompareTag ("Player1") ||
+			   other.gameObject.CompareTag ("Player2") || other.gameObject.CompareTag ("Player3")) {
+				if (cube_a.active) {
+					cube_a.active = false;
+					myPhotonView.RPC ("ActivateFlag", PhotonTargets.All, "cube1", this.gameObject.tag);  
+				}
+				if (cube_b.active) {
+					cube_b.active = false;
+					myPhotonView.RPC ("ActivateFlag", PhotonTargets.All, "cube2", this.gameObject.tag);  
+				}
+				if (cube_c.active) {
+					cube_c.active = false;
+					myPhotonView.RPC ("ActivateFlag", PhotonTargets.All, "cube3", this.gameObject.tag);  
+				}
+			}
 		}
     }
 
@@ -81,7 +156,7 @@ public class BB8MovementScript : Photon.MonoBehaviour
             rb.AddForce(movement * speed);
         }
     }
-
+		
 	IEnumerator OnTriggerEnter(Collider other)
 	{
 		Debug.Log (other.gameObject.tag);
@@ -317,10 +392,10 @@ public class BB8MovementScript : Photon.MonoBehaviour
 			{"cube4", "CubeD"}
 		};
 
-		Debug.Log ("Stormtrooper" + cube [cube.Length - 1]);
-
-		GameObject st = GameObject.FindGameObjectWithTag ("Stormtrooper" + cube[cube.Length - 1]);
-		st.GetComponent<StormTrooperControl> ().Wakeup (playerID);
+		if (player.tag == "Player" + cube [cube.Length - 1]) {
+			GameObject st = GameObject.FindGameObjectWithTag ("Stormtrooper" + cube[cube.Length - 1]);
+			st.GetComponent<StormTrooperControl> ().Wakeup (playerID);
+		}
 
 		GameObject target = GameObject.FindGameObjectWithTag (playerID);
 		foreach(Transform child in target.transform.GetChild(0).transform) {
@@ -342,9 +417,6 @@ public class BB8MovementScript : Photon.MonoBehaviour
 			{"cube3", "CubeC"},
 			{"cube4", "CubeD"}
 		};
-
-		GameObject st = GameObject.FindGameObjectWithTag ("Stormtrooper" + cube[cube.Length - 1]);
-		st.GetComponent<StormTrooperControl> ().activate = false;
 			
 		GameObject target = GameObject.FindGameObjectWithTag (playerID);
 
