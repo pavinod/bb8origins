@@ -139,6 +139,7 @@
      <Compile Include="Assets\Scripts\PickUpCube.cs" />
      <Compile Include="Assets\Scripts\PlayMusic.cs" />
      <Compile Include="Assets\Scripts\RandomMatchmaker.cs" />
+     <Compile Include="Assets\Scripts\ScoreManager.cs" />
      <Compile Include="Assets\Scripts\SmoothFollow.cs" />
      <Compile Include="Assets\Scripts\StormTrooperControl.cs" />
      <Compile Include="Assets\Scripts\SwitchCharacter.cs" />
@@ -155,6 +156,7 @@
      <None Include="Assets\Plugins\release_history.txt" />
      <None Include="Assets\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
      <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
+     <None Include="Assets\Fonts\LuckiestGuy\LICENSE.txt" />
      <None Include="Assets\Standard Assets\Environment\Water\Water\Shaders\FXWaterPro.shader" />
      <None Include="Assets\Photon Unity Networking\readme.txt" />
      <None Include="Assets\Standard Assets\Characters\ThirdPersonCharacter\ThirdPersonCharacterGuidelines.txt" />

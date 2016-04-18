@@ -90,6 +90,7 @@ public class GameManager : Photon.MonoBehaviour {
 		foreach (GameObject obj in playersInGame) {
 			Debug.Log("There is someone named: " + obj.GetComponent<PhotonView>().owner.ID + " in the game!");
 		}
+		score = new int[4] { 0, 0, 0, 0 };
     }
 
 
@@ -98,7 +99,7 @@ public class GameManager : Photon.MonoBehaviour {
 		
 		if (PhotonNetwork.room == null) return; //Only display this GUI when inside a room
 
-		if (PhotonNetwork.room.playerCount == 1) {
+		if (PhotonNetwork.room.playerCount != 1) {
 			GUILayout.BeginArea (new Rect ((Screen.width - 400) / 2, (Screen.height - 300) / 2, 400, 300));
 			GUILayout.Label ("<size=30>Waiting for " + (4 - (PhotonNetwork.room.playerCount)) + " more players</size>", GUILayout.Width (500));
 			Ready();
@@ -128,7 +129,6 @@ public class GameManager : Photon.MonoBehaviour {
                     st.tag = "Stormtrooper" + st.GetComponent<PhotonView>().owner.ID;
                 }
 
-                score = new int[4] { 0, 0, 0, 0 };
             }
             else
             {
@@ -209,6 +209,11 @@ public class GameManager : Photon.MonoBehaviour {
     [PunRPC]
     void Increment(int points, string playerID)
     {
+		Debug.Log ("incremented");
         score[(int)Char.GetNumericValue(playerID[playerID.Length - 1])] += points;
-    }
+		ScoreManager.score1 = score [0];
+		ScoreManager.score2 = score [1];
+		ScoreManager.score3 = score [2];
+		ScoreManager.score4 = score [3];
+	}
 }

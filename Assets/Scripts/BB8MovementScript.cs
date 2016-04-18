@@ -271,7 +271,7 @@ public class BB8MovementScript : Photon.MonoBehaviour
                     cube_d.active = false;
 					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube4", this.gameObject.tag);                     
 				}
-                myPhotonView.RPC("Increment", PhotonTargets.All, count, this.gameObject.tag);
+				myPhotonView.RPC("Increment", PhotonTargets.All, count, this.gameObject.tag);
             }
 			if(other.gameObject.CompareTag("Cube4")) {
 				cube_d.active = true;
