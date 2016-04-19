@@ -97,7 +97,7 @@ public class GameManager : Photon.MonoBehaviour {
 		
 		if (PhotonNetwork.room == null) return; //Only display this GUI when inside a room
 
-		if (PhotonNetwork.room.playerCount != 1) {
+		if (PhotonNetwork.room.playerCount != 4) {
 			ScoreManager.waitingtext = PhotonNetwork.room.playerCount + "/4 ready";
 			joystick.SetActive (false);
 		} else {
