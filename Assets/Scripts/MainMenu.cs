@@ -55,7 +55,7 @@ public class MainMenu : MonoBehaviour
 
 		if (PhotonNetwork.GetRoomList().Length == 0)
 		{
-			random.GetComponentInChildren<Text>().text="No rooms available";
+			random.GetComponentInChildren<Text>().text="<color=\"#C8C8C8FF\">Random Room</color>";
 			random.enabled = false;
 		}
 		else
@@ -63,7 +63,7 @@ public class MainMenu : MonoBehaviour
 			if (!refreshed) scroller.GetComponent<ScrollableList> ().refreshRooms ();
 			refreshed = true;
 			random.enabled = true;			
-			random.GetComponentInChildren<Text>().text="<color=white>Random Room!</color>";
+			random.GetComponentInChildren<Text>().text="<color=white>Random Room</color>";
 		}
 
 		if (PhotonNetwork.room != null)

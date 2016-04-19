@@ -29,7 +29,6 @@ public class BB8MovementScript : Photon.MonoBehaviour
     private Vector3 m_Move;
     private bool jumpEnb;
 	public HighScoreLogic hsl;
-	public StormTrooperControl stc;
 	public AudioSource source;
 	int[] score;
 
@@ -325,7 +324,7 @@ public class BB8MovementScript : Photon.MonoBehaviour
 		
 	//play sound when collecting flag
 	void soundFlag(){
-//		source.Play ();
+		source.Play ();
 	}
 
 	[PunRPC]

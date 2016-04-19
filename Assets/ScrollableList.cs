@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ScrollableList : MonoBehaviour
 {
 	public GameObject itemPrefab;
-	public int itemCount =3, columnCount = 1;
+	public int itemCount =3, columnCount = 2;
 	public Button refresh;
 
 	void Awake(){
@@ -31,8 +31,8 @@ public class ScrollableList : MonoBehaviour
 
 		//adjust the height of the container so that it will just barely fit all its children
 		float scrollHeight = height * rowCount;
-//		containerRectTransform.offsetMin = new Vector2(containerRectTransform.offsetMin.x, -scrollHeight / 2);
-//		containerRectTransform.offsetMax = new Vector2(containerRectTransform.offsetMax.x, scrollHeight / 2);
+		containerRectTransform.offsetMin = new Vector2(containerRectTransform.offsetMin.x, -scrollHeight / 2);
+		containerRectTransform.offsetMax = new Vector2(containerRectTransform.offsetMax.x, scrollHeight / 2);
 
 		int j = 0;
 		int i = 0;
@@ -50,19 +50,12 @@ public class ScrollableList : MonoBehaviour
 			newItem.SetActive (true);
 			newItem.name = gameObject.name + " "+ game.name;
 			Text txt=newItem.GetComponentInChildren<Text> ();
-			//newItem.GetComponentsInChildren<Text>()[0].text="tst";
 			newItem.GetComponentsInChildren<Text>()[1].text=game.name;
 			newItem.GetComponentsInChildren<Text>()[2].text= game.playerCount + "/" + game.maxPlayers;
 			newItem.GetComponentInChildren<Button> ().GetComponentInChildren<Text>().text="Join";
-			//but.GetComponentInChildren<Text>().text= "Join "+ game.name;
-
-			//Button but = GameObject.Find ("JoinRoom").GetComponent<Button> ();
 			newItem.GetComponentInChildren<Button> ().onClick.AddListener(()=> {
 				PhotonNetwork.JoinRoom(game.name);
 			});
-
-			Debug.Log ("Logging "+game.name + " " + game.playerCount + "/" + game.maxPlayers);
-
 			newItem.transform.parent = gameObject.transform;
 
 			//move and size the new item
@@ -77,9 +70,5 @@ public class ScrollableList : MonoBehaviour
 			rectTransform.offsetMax = new Vector2(x, y);
 			i++;
 		}
-
-
-
 	}
-
 }
