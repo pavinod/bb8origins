@@ -31,8 +31,8 @@ public class ScrollableList : MonoBehaviour
 
 		//adjust the height of the container so that it will just barely fit all its children
 		float scrollHeight = height * rowCount;
-		//		containerRectTransform.offsetMin = new Vector2(containerRectTransform.offsetMin.x, -scrollHeight / 2);
-		//		containerRectTransform.offsetMax = new Vector2(containerRectTransform.offsetMax.x, scrollHeight / 2);
+//		containerRectTransform.offsetMin = new Vector2(containerRectTransform.offsetMin.x, -scrollHeight / 2);
+//		containerRectTransform.offsetMax = new Vector2(containerRectTransform.offsetMax.x, scrollHeight / 2);
 
 		int j = 0;
 		int i = 0;

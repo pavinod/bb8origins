@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Photon;
 
-public class StormTrooperControl : Photon.MonoBehaviour
+public class StormTrooperControl : MonoBehaviour
 {
 	Transform player;               // Reference to the player's position.
 	GameObject playerGameObject;    // Refernce to a BB8
@@ -12,7 +11,6 @@ public class StormTrooperControl : Photon.MonoBehaviour
 	private string BB8tag = "";
 	bool isWalking;
 	bool isWalkingRest;
-	Vector3 destination;
 
 	void Awake ()
 	{
@@ -45,40 +43,24 @@ public class StormTrooperControl : Photon.MonoBehaviour
 
 	void Update ()
 	{
-		if (photonView.isMine) {
-			float speed;
-			speed = Vector3.Project (nav.desiredVelocity, transform.forward).magnitude;
+		float speed;
+		speed = Vector3.Project (nav.desiredVelocity, transform.forward).magnitude;
 
-			if (speed > 0) {
-				isWalking = true;
-			} else {
-				isWalking = false;
-			}
-
-			anim.SetBool ("isWalking", isWalking);
-
-			if (activate) {
-				nav.enabled = true;
-				destination = player.position;
-				nav.SetDestination (player.position);
-			} else {
-				nav.enabled = false;
-			}
-
+		if (speed > 0) {
+			isWalking = true;
 		} else {
-
-			anim.SetBool ("isWalking", isWalkingRest);
-
-			if (activate) {
-				nav.enabled = true;
-				nav.SetDestination (destination);
-			} else {
-				nav.enabled = false;
-			}
-
+			isWalking = false;
 		}
 
-	} 
+		anim.SetBool ("isWalking", isWalking);
+
+		if (activate) {
+			nav.enabled = true;
+			nav.SetDestination (player.position);
+		} else {
+			nav.enabled = false;
+		}
+	}
 
 	void OnCollisionEnter(Collision collision) {
 		Debug.Log ("bump");
@@ -89,24 +71,6 @@ public class StormTrooperControl : Photon.MonoBehaviour
 			activate = false;
 			nav.enabled = false;
 			//TODO: call the BB8 function to give up the cobe
-		}
-	}
-
-	void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-	{
-		if (stream.isWriting)
-		{
-			// We own this player: send the others our data
-			stream.SendNext(destination);
-			stream.SendNext(activate);
-			stream.SendNext(isWalking);
-		}
-		else
-		{
-			// Network player, receive data
-			this.destination = (Vector3)stream.ReceiveNext();
-			this.activate = (bool)stream.ReceiveNext();
-			this.isWalkingRest = (bool)stream.ReceiveNext ();
 		}
 	}
 }
