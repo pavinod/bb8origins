@@ -152,6 +152,7 @@
      <Compile Include="Assets\SwitchScene1.cs" />
      <Compile Include="Assets\SwitchScene2.cs" />
      <Compile Include="Assets\scrollablelist2.cs" />
+     <Compile Include="Assets\startTimer.cs" />
      <None Include="Assets\Skybox\Desert\hw_sahara.shader" />
      <None Include="Assets\Plugins\Photon3Unity3D.xml" />
      <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Simple.shader" />

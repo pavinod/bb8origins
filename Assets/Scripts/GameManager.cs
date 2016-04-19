@@ -15,12 +15,13 @@ public class GameManager : Photon.MonoBehaviour {
 	private PhotonView myPhotonView;
 	public GameObject joystick;
 	public Button quit;
-	public MatchTimer gametimer;
+	public startTimer gametimer;
 	public GameObject lobby;
 	private PlayMusic playMusic;
 	public MatchTimer gamestarted;
 	public GameObject gameUI;
 	public Text dc;
+	public GameObject finalscore;
 
 	public static bool ended;
 
@@ -32,14 +33,14 @@ public class GameManager : Photon.MonoBehaviour {
 	void OnJoinedRoom()
 	{
 		gameUI.SetActive (true);
-		dc.enabled = false;
+//		dc.enabled = false;
 		lobby.SetActive(false);
 		StartGame();
 	}
 
 	void Update(){
 		//Debug.Log ("Current players " + PhotonNetwork.room.playerCount);
-		Debug.Log ("Start " + start);
+//		Debug.Log ("Start " + start);
 		if (!start&& PhotonNetwork.inRoom) {
 			checkPlayersNum ();
 		}
@@ -112,6 +113,7 @@ public class GameManager : Photon.MonoBehaviour {
 			joystick.SetActive (false);
 		} else {
 
+			gamestarted.enabled = true;
 			gametimer.enabled = true;
 			ScoreManager.waiting = false;
 
@@ -137,6 +139,7 @@ public class GameManager : Photon.MonoBehaviour {
 				}
 				joystick.SetActive(true);
 				ScoreManager.start = true;
+				dc.text = "" + Convert.ToInt32 (gametimer.SecondsUntilItsTime);
 
 			}
 			else
@@ -151,7 +154,8 @@ public class GameManager : Photon.MonoBehaviour {
 		});
 
 		if (gametimer.IsItTimeYet || ended) { 
-			StartCoroutine(ShowMessage("Oops you got DCed...", 2)); 
+			Debug.Log ("test");
+			StartCoroutine(ShowMessage("Game Over!", 5)); 
 		}
 	}
 
@@ -232,14 +236,14 @@ public class GameManager : Photon.MonoBehaviour {
 
 	void checkPlayersNum()
 	{
-		if (PhotonNetwork.room.playerCount< 4) {
+		if (PhotonNetwork.room.playerCount < 4) {
 			//kickout
 			Debug.Log ("Close room NOW!!!");
 			//			dc.text= "You got DCed";
 			//			//start timer
 			//			dc.enabled=true;
 			//end timer 
-			StartCoroutine(ShowMessage("Oops you got DCed...",2));
+			StartCoroutine(ShowMessage("DC..", 5));
 		}
 	}
 
@@ -247,6 +251,7 @@ public class GameManager : Photon.MonoBehaviour {
 		//set text
 		dc.text= message;
 		dc.enabled=true;
+		finalscore.SetActive (true);
 		yield return new WaitForSeconds (delay);
 		PhotonNetwork.LeaveRoom ();
 		dc.enabled = false;		

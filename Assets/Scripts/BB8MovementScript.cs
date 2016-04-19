@@ -382,7 +382,7 @@ public class BB8MovementScript : Photon.MonoBehaviour
 	[PunRPC]
 	void Increment(int points, string playerID)
 	{
-		Debug.Log ("incremented");
+		Debug.Log ("incremented " + playerID + " " + points);
 		int id = (int)Char.GetNumericValue (playerID [playerID.Length - 1]);
 		if (id == 1) ScoreManager.score1 += points;
 		if (id == 2) ScoreManager.score2 += points;

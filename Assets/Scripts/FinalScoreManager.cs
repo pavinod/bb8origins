@@ -4,8 +4,6 @@ using System.Collections;
 
 public class FinalScoreManager : MonoBehaviour {
 
-	public static bool ended;
-
 	Text finalScore;
 
 	// Use this for initialization
@@ -16,10 +14,7 @@ public class FinalScoreManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (ended) {
-			displayScore ();
-		}
-
+		displayScore ();
 	}
 
 	void displayScore(){
