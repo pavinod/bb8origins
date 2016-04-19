@@ -14,7 +14,6 @@ public class GameManager : Photon.MonoBehaviour {
 	public Camera mainCam;
 	private PhotonView myPhotonView;
 	public GameObject joystick;
-	public Image bg;
 	public Button quit;
 	public MatchTimer gametimer;
 	public GameObject lobby;
@@ -22,6 +21,8 @@ public class GameManager : Photon.MonoBehaviour {
 	public MatchTimer gamestarted;
 	public GameObject gameUI;
 	public Text dc;
+
+	public static bool ended;
 
 	Dictionary<string, List<Vector3>> dict = new Dictionary<string, List<Vector3>>();
 	Dictionary<string, Color32> colorRef = new Dictionary<string, Color32> ();
@@ -149,7 +150,9 @@ public class GameManager : Photon.MonoBehaviour {
 			PhotonNetwork.LeaveRoom();
 		});
 
-		//       if (gametimer.IsItTimeYet) { GameOverAndReload(); }
+		if (gametimer.IsItTimeYet || ended) { 
+			StartCoroutine(ShowMessage("Oops you got DCed...", 2)); 
+		}
 	}
 
 	IEnumerator Ready() {
@@ -227,8 +230,8 @@ public class GameManager : Photon.MonoBehaviour {
 		Application.LoadLevel (0);
 	}
 
-	void checkPlayersNum(){
-
+	void checkPlayersNum()
+	{
 		if (PhotonNetwork.room.playerCount< 4) {
 			//kickout
 			Debug.Log ("Close room NOW!!!");
@@ -239,6 +242,7 @@ public class GameManager : Photon.MonoBehaviour {
 			StartCoroutine(ShowMessage("Oops you got DCed...",2));
 		}
 	}
+
 	IEnumerator ShowMessage(string message, float delay){
 		//set text
 		dc.text= message;

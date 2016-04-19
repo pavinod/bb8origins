@@ -47,5 +47,10 @@ public class ScoreManager : MonoBehaviour
 		} else {
 			text.text = count + "...";
 		}
+
+		if (score1 >= 10 || score2 >= 10 || score3 >= 10 || score4 >= 10)
+		{
+			GameManager.ended = true;
+		}
 	}
 }
