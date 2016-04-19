@@ -155,6 +155,7 @@ public class GameManager : Photon.MonoBehaviour {
 
 		if (gametimer.IsItTimeYet || ended) { 
 			Debug.Log ("test");
+			gameUI.SetActive(false);
 			StartCoroutine(ShowMessage("Game Over!", 5)); 
 		}
 	}
@@ -243,6 +244,7 @@ public class GameManager : Photon.MonoBehaviour {
 			//			//start timer
 			//			dc.enabled=true;
 			//end timer 
+			gameUI.SetActive(false);
 			StartCoroutine(ShowMessage("DC..", 5));
 		}
 	}

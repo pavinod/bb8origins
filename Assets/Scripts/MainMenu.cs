@@ -34,6 +34,10 @@ public class MainMenu : MonoBehaviour
 		//Set camera clipping for nicer "main menu" background
 //		Camera.main.farClipPlane = Camera.main.nearClipPlane + 0.1f;
 		joystick.SetActive (false);
+
+		quit.onClick.AddListener(()=> {
+			Application.LoadLevel (0);
+		});
 	}
 
 	private string roomName = "Mars";
