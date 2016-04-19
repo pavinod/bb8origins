@@ -68,6 +68,7 @@ public class ScrollableList : MonoBehaviour
 			x = rectTransform.offsetMin.x + width;
 			y = rectTransform.offsetMin.y + height;
 			rectTransform.offsetMax = new Vector2(x, y);
+			rectTransform.localScale = new Vector2 (1, 1);
 			i++;
 		}
 	}
