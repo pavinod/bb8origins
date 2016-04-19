@@ -38,10 +38,17 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
+<<<<<<< HEAD
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+=======
+      <HintPath>D:/Term 5 Unity/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>D:/Term 5 Unity/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+>>>>>>> b0821da5b9f76a91e877d3b6f8d5d4ee8247831e
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +100,7 @@
      <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
      <None Include="Assets\Photon Unity Networking\changelog.txt" />
  <Reference Include="UnityEngine.UI">
+<<<<<<< HEAD
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
@@ -103,6 +111,18 @@
  </Reference>
  <Reference Include="websocket-sharp">
  <HintPath>C:/Users/Pavithren/Desktop/Dexter/Assets/Plugins/WebSocket/websocket-sharp.dll</HintPath>
+=======
+ <HintPath>D:/Term 5 Unity/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Networking">
+ <HintPath>D:/Term 5 Unity/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="Photon3Unity3D">
+ <HintPath>E:/term 5/Software Construction/game project/Dexter/Assets/Plugins/Photon3Unity3D.dll</HintPath>
+ </Reference>
+ <Reference Include="websocket-sharp">
+ <HintPath>E:/term 5/Software Construction/game project/Dexter/Assets/Plugins/WebSocket/websocket-sharp.dll</HintPath>
+>>>>>>> b0821da5b9f76a91e877d3b6f8d5d4ee8247831e
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
