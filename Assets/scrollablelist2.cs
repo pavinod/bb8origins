@@ -3,21 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class ScrollableList : MonoBehaviour
+public class scrollablelist2 : MonoBehaviour
 {
 	public GameObject itemPrefab;
-	public int itemCount =3, columnCount = 2;
-	public Button refresh;
+	public int itemCount = 10, columnCount = 1;
 
-	void Awake(){
-		refresh.onClick.AddListener (refreshRooms);
-	}
-	public void refreshRooms(){
-
-		var children = new List<GameObject>();
-		foreach (Transform child in transform) children.Add(child.gameObject);
-		children.ForEach(child => Destroy(child));
-
+	void Start()
+	{
 		RectTransform rowRectTransform = itemPrefab.GetComponent<RectTransform>();
 		RectTransform containerRectTransform = gameObject.GetComponent<RectTransform>();
 
@@ -35,11 +27,7 @@ public class ScrollableList : MonoBehaviour
 		containerRectTransform.offsetMax = new Vector2(containerRectTransform.offsetMax.x, scrollHeight / 2);
 
 		int j = 0;
-		int i = 0;
-		//for (int i = 0; i < itemCount; i++)
-		int numRooms= PhotonNetwork.countOfRooms;
-
-		foreach (RoomInfo game in PhotonNetwork.GetRoomList())
+		for (int i = 0; i < itemCount; i++)
 		{
 			//this is used instead of a double for loop because itemCount may not fit perfectly into the rows/columns
 			if (i % columnCount == 0)
@@ -47,15 +35,7 @@ public class ScrollableList : MonoBehaviour
 
 			//create a new item, name it, and set the parent
 			GameObject newItem = Instantiate(itemPrefab) as GameObject;
-			newItem.SetActive (true);
-			newItem.name = gameObject.name + " "+ game.name;
-			Text txt = newItem.GetComponentInChildren<Text> ();
-			newItem.GetComponentsInChildren<Text>()[1].text=game.name;
-			newItem.GetComponentsInChildren<Text>()[2].text= game.playerCount + "/" + game.maxPlayers;
-			newItem.GetComponentInChildren<Button> ().GetComponentInChildren<Text>().text="Join";
-			newItem.GetComponentInChildren<Button> ().onClick.AddListener(()=> {
-				PhotonNetwork.JoinRoom(game.name);
-			});
+			newItem.name = gameObject.name + " item at (" + i + "," + j + ")";
 			newItem.transform.parent = gameObject.transform;
 
 			//move and size the new item
@@ -68,7 +48,9 @@ public class ScrollableList : MonoBehaviour
 			x = rectTransform.offsetMin.x + width;
 			y = rectTransform.offsetMin.y + height;
 			rectTransform.offsetMax = new Vector2(x, y);
-			i++;
 		}
+
+
 	}
+
 }

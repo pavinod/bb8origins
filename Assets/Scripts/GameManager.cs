@@ -111,6 +111,7 @@ public class GameManager : Photon.MonoBehaviour {
 			joystick.SetActive (false);
 		} else {
 
+			gametimer.enabled = true;
 			ScoreManager.waiting = false;
 
 			if (gamestarted.IsItTimeYet)
