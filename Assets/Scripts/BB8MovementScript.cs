@@ -55,15 +55,15 @@ public class BB8MovementScript : Photon.MonoBehaviour
 
 				if(cube_b.active){
 					cube_b.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube2", this.gameObject.tag);                    
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.AllViaServer, "cube2", this.gameObject.tag);                    
 				}
 				if(cube_c.active) {
 					cube_c.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube3", this.gameObject.tag);  
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.AllViaServer, "cube3", this.gameObject.tag);  
 				}
 				if(cube_d.active) {
 					cube_d.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube4", this.gameObject.tag);                    
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.AllViaServer, "cube4", this.gameObject.tag);                    
 				}
 			}
 		}
@@ -77,15 +77,15 @@ public class BB8MovementScript : Photon.MonoBehaviour
 				other.gameObject.CompareTag("Player3") || other.gameObject.CompareTag("Player4")) {
 				if(cube_a.active){
 					cube_a.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube1", this.gameObject.tag);                     
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.AllViaServer, "cube1", this.gameObject.tag);                     
 				}
 				if(cube_c.active) {
 					cube_c.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube3", this.gameObject.tag);  
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.AllViaServer, "cube3", this.gameObject.tag);  
 				}
 				if(cube_d.active) {
 					cube_d.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube4", this.gameObject.tag);                   
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.AllViaServer, "cube4", this.gameObject.tag);                   
 				}
 			}
 		}
@@ -99,15 +99,15 @@ public class BB8MovementScript : Photon.MonoBehaviour
 				other.gameObject.CompareTag("Player2") || other.gameObject.CompareTag("Player4")) {
 				if(cube_a.active){
 					cube_a.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube1", this.gameObject.tag);                    
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.AllViaServer, "cube1", this.gameObject.tag);                    
 				}
 				if(cube_b.active) {
 					cube_b.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube2", this.gameObject.tag);  
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.AllViaServer, "cube2", this.gameObject.tag);  
 				}
 				if(cube_d.active) {
 					cube_d.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube4", this.gameObject.tag);                   
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.AllViaServer, "cube4", this.gameObject.tag);                   
 				}
 			}
 		}
@@ -121,15 +121,15 @@ public class BB8MovementScript : Photon.MonoBehaviour
 			   other.gameObject.CompareTag ("Player2") || other.gameObject.CompareTag ("Player3")) {
 				if (cube_a.active) {
 					cube_a.active = false;
-					myPhotonView.RPC ("ActivateFlag", PhotonTargets.All, "cube1", this.gameObject.tag);  
+					myPhotonView.RPC ("ActivateFlag", PhotonTargets.AllViaServer, "cube1", this.gameObject.tag);  
 				}
 				if (cube_b.active) {
 					cube_b.active = false;
-					myPhotonView.RPC ("ActivateFlag", PhotonTargets.All, "cube2", this.gameObject.tag);  
+					myPhotonView.RPC ("ActivateFlag", PhotonTargets.AllViaServer, "cube2", this.gameObject.tag);  
 				}
 				if (cube_c.active) {
 					cube_c.active = false;
-					myPhotonView.RPC ("ActivateFlag", PhotonTargets.All, "cube3", this.gameObject.tag);  
+					myPhotonView.RPC ("ActivateFlag", PhotonTargets.AllViaServer, "cube3", this.gameObject.tag);  
 				}
 			}
 		}
@@ -176,34 +176,34 @@ public class BB8MovementScript : Photon.MonoBehaviour
 				if(cube_b.active){
                     count++;
                     cube_b.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube2", this.gameObject.tag);              
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.AllViaServer, "cube2", this.gameObject.tag);              
 				}
 				if(cube_c.active) {
                     count++;
                     cube_c.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube3", this.gameObject.tag);
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.AllViaServer, "cube3", this.gameObject.tag);
 				}
 				if(cube_d.active) {
                     count++;
                     cube_d.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube4", this.gameObject.tag);                 
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.AllViaServer, "cube4", this.gameObject.tag);                 
 				}
-                myPhotonView.RPC("Increment", PhotonTargets.All, count, this.gameObject.tag);
+                myPhotonView.RPC("Increment", PhotonTargets.AllViaServer, count, this.gameObject.tag);
             }
 			if(other.gameObject.CompareTag("Cube2")) {
 				soundFlag ();
 				cube_b.active = true;
-				myPhotonView.RPC("DeactivateFlag", PhotonTargets.All, "cube2", this.gameObject.tag);                   
+				myPhotonView.RPC("DeactivateFlag", PhotonTargets.AllViaServer, "cube2", this.gameObject.tag);                   
 			}
 			if(other.gameObject.CompareTag("Cube3")) {
 				soundFlag ();
 				cube_c.active = true;
-				myPhotonView.RPC("DeactivateFlag", PhotonTargets.All, "cube3", this.gameObject.tag);
+				myPhotonView.RPC("DeactivateFlag", PhotonTargets.AllViaServer, "cube3", this.gameObject.tag);
 			}
 			if(other.gameObject.CompareTag("Cube4")) {
 				soundFlag ();
 				cube_d.active = true;
-				myPhotonView.RPC("DeactivateFlag", PhotonTargets.All, "cube4", this.gameObject.tag);
+				myPhotonView.RPC("DeactivateFlag", PhotonTargets.AllViaServer, "cube4", this.gameObject.tag);
 			}
 			yield return new WaitForSeconds (0);
 		}
@@ -214,34 +214,34 @@ public class BB8MovementScript : Photon.MonoBehaviour
 		if(player.tag == "Player2") {
 			if(other.gameObject.CompareTag("Cube1")) {
 				cube_a.active = true;
-				myPhotonView.RPC("DeactivateFlag", PhotonTargets.All, "cube1", this.gameObject.tag);
+				myPhotonView.RPC("DeactivateFlag", PhotonTargets.AllViaServer, "cube1", this.gameObject.tag);
 			}
 			if(other.gameObject.CompareTag("Cube2")) {
                 int count = 0 ;
 				if(cube_a.active){
                     count++;
                     cube_a.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube1", this.gameObject.tag);                     
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.AllViaServer, "cube1", this.gameObject.tag);                     
 				}
 				if(cube_c.active) {
                     count++;
                     cube_c.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube3", this.gameObject.tag);  
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.AllViaServer, "cube3", this.gameObject.tag);  
 				}
 				if(cube_d.active) {
                     count++;
                     cube_d.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube4", this.gameObject.tag);                     
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.AllViaServer, "cube4", this.gameObject.tag);                     
 				}
-                myPhotonView.RPC("Increment", PhotonTargets.All, count, this.gameObject.tag);
+                myPhotonView.RPC("Increment", PhotonTargets.AllViaServer, count, this.gameObject.tag);
             }
 			if(other.gameObject.CompareTag("Cube3")) {
 				cube_c.active = true;
-				myPhotonView.RPC("DeactivateFlag", PhotonTargets.All, "cube3", this.gameObject.tag);
+				myPhotonView.RPC("DeactivateFlag", PhotonTargets.AllViaServer, "cube3", this.gameObject.tag);
 			}
 			if(other.gameObject.CompareTag("Cube4")) {
 				cube_d.active = true;
-				myPhotonView.RPC("DeactivateFlag", PhotonTargets.All, "cube4", this.gameObject.tag);
+				myPhotonView.RPC("DeactivateFlag", PhotonTargets.AllViaServer, "cube4", this.gameObject.tag);
 			}
 			yield return new WaitForSeconds (0);
 		}
@@ -252,34 +252,34 @@ public class BB8MovementScript : Photon.MonoBehaviour
 		if(player.tag == "Player3") {
 			if(other.gameObject.CompareTag("Cube1")) {
 				cube_a.active = true;
-				myPhotonView.RPC("DeactivateFlag", PhotonTargets.All, "cube1", this.gameObject.tag);
+				myPhotonView.RPC("DeactivateFlag", PhotonTargets.AllViaServer, "cube1", this.gameObject.tag);
 			}
 			if(other.gameObject.CompareTag("Cube2")) {
 				cube_b.active = true;
-				myPhotonView.RPC("DeactivateFlag", PhotonTargets.All, "cube2", this.gameObject.tag);
+				myPhotonView.RPC("DeactivateFlag", PhotonTargets.AllViaServer, "cube2", this.gameObject.tag);
 			}
 			if(other.gameObject.CompareTag("Cube3")) {
                 int count = 0;
 				if(cube_a.active){
                     count++;
                     cube_a.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube1", this.gameObject.tag);                     
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.AllViaServer, "cube1", this.gameObject.tag);                     
 				}
 				if(cube_b.active) {
                     count++;
                     cube_b.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube2", this.gameObject.tag);  
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.AllViaServer, "cube2", this.gameObject.tag);  
 				}
 				if(cube_d.active) {
                     count++;
                     cube_d.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube4", this.gameObject.tag);                     
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.AllViaServer, "cube4", this.gameObject.tag);                     
 				}
-				myPhotonView.RPC("Increment", PhotonTargets.All, count, this.gameObject.tag);
+				myPhotonView.RPC("Increment", PhotonTargets.AllViaServer, count, this.gameObject.tag);
             }
 			if(other.gameObject.CompareTag("Cube4")) {
 				cube_d.active = true;
-				myPhotonView.RPC("DeactivateFlag", PhotonTargets.All, "cube4", this.gameObject.tag);
+				myPhotonView.RPC("DeactivateFlag", PhotonTargets.AllViaServer, "cube4", this.gameObject.tag);
 			}
 			yield return new WaitForSeconds (0);
 		}
@@ -290,50 +290,39 @@ public class BB8MovementScript : Photon.MonoBehaviour
 		if(player.tag == "Player4") {
 			if(other.gameObject.CompareTag("Cube1")) {
 				cube_a.active = true;
-				myPhotonView.RPC("DeactivateFlag", PhotonTargets.All, "cube1", this.gameObject.tag);
+				myPhotonView.RPC("DeactivateFlag", PhotonTargets.AllViaServer, "cube1", this.gameObject.tag);
 			}
 			if(other.gameObject.CompareTag("Cube2")) {
 				cube_b.active = true;
-				myPhotonView.RPC("DeactivateFlag", PhotonTargets.All, "cube2", this.gameObject.tag);
+				myPhotonView.RPC("DeactivateFlag", PhotonTargets.AllViaServer, "cube2", this.gameObject.tag);
 			}
 			if(other.gameObject.CompareTag("Cube3")) {
 				cube_c.active = true;
-				myPhotonView.RPC("DeactivateFlag", PhotonTargets.All, "cube3", this.gameObject.tag);
+				myPhotonView.RPC("DeactivateFlag", PhotonTargets.AllViaServer, "cube3", this.gameObject.tag);
 			}
 			if(other.gameObject.CompareTag("Cube4")) {
                 int count = 0;
 				if(cube_a.active){
                     count++;
                     cube_a.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube1", this.gameObject.tag);                    
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.AllViaServer, "cube1", this.gameObject.tag);                    
 				}
 				if(cube_b.active) {
                     count++;
                     cube_b.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube2", this.gameObject.tag);  
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.AllViaServer, "cube2", this.gameObject.tag);  
 				}
 				if(cube_c.active) {
                     count++;
                     cube_c.active = false;
-					myPhotonView.RPC("ActivateFlag", PhotonTargets.All, "cube3", this.gameObject.tag);                     
+					myPhotonView.RPC("ActivateFlag", PhotonTargets.AllViaServer, "cube3", this.gameObject.tag);                     
 				}
-                myPhotonView.RPC("Increment", PhotonTargets.All, count, this.gameObject.tag);
+                myPhotonView.RPC("Increment", PhotonTargets.AllViaServer, count, this.gameObject.tag);
             }
 			yield return new WaitForSeconds (0);
 		}
 	}
-
-
-	/*
-	 * add for stormtrooper activation
-	 */
-	void ActivateStormtrooper(string stormtrooperTag, string BB8Tag){
-		Debug.Log ("call stormtrooper activation");
-
-		GameObject st = GameObject.FindGameObjectWithTag (stormtrooperTag);
-		stc = st.GetComponentInChildren<StormTrooperControl> ();
-		stc.Wakeup (BB8Tag);
-	}
+		
 	//play sound when collecting flag
 	void soundFlag(){
 //		source.Play ();

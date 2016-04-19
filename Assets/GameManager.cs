@@ -97,19 +97,17 @@ public class GameManager : Photon.MonoBehaviour {
 		
 		if (PhotonNetwork.room == null) return; //Only display this GUI when inside a room
 
-		if (PhotonNetwork.room.playerCount != 4) {
+		if (PhotonNetwork.room.playerCount != 1) {
 			ScoreManager.waitingtext = PhotonNetwork.room.playerCount + "/4 ready";
 			joystick.SetActive (false);
 		} else {
+
+			ScoreManager.waiting = false;
+
             if (gamestarted.IsItTimeYet)
             {
-				ScoreManager.waiting = false;
-
                 if (start)
                 {
-                    GUILayout.Label("<size=30>Ready...</size>", GUILayout.Width(500));
-                    //yield WaitForSeconds(2);
-                    GUILayout.Label("<size=30>Go!!</size>", GUILayout.Width(500));
                     start = false;
 
 					GameObject[] playersInGame = GameObject.FindGameObjectsWithTag("TBA");

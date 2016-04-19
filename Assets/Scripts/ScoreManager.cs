@@ -22,6 +22,9 @@ public class ScoreManager : MonoBehaviour
 		// Set up the reference.
 		text = GetComponent <Text> ();
 
+		waiting = true;
+		start = false;
+
 		// Reset the score.
 		score1 = 0;
 		score2 = 0;
@@ -39,7 +42,7 @@ public class ScoreManager : MonoBehaviour
 				"<color=yellow>" + score2 + "</color>" + "       " +
 				"<color=red>" + score3 + "</color>" + "       " + 
 				"<color=green>" + score4 + "</color>";
-		} else if (!waiting) {
+		} else if (waiting) {
 			text.text = "<color=white>" + waitingtext + "</color>";
 		} else {
 			text.text = count + "...";
