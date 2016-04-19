@@ -35,11 +35,14 @@ public class ScoreManager : MonoBehaviour
 	{
 		// Set the displayed text to be the word "Score" followed by the score value.
 		if (start) {
-			text.text = score1 + "       " + score2 + "       " + score3 + "       " + score4;
+			text.text = "<color=blue>" + score1 + "</color>" + "       " + 
+				"<color=yellow>" + score2 + "</color>" + "       " +
+				"<color=red>" + score3 + "</color>" + "       " + 
+				"<color=green>" + score4 + "</color>";
 		} else if (!waiting) {
-			text.text = waitingtext;
+			text.text = "<color=white>" + waitingtext + "</color>";
 		} else {
-			text.text = "" + count;
+			text.text = count + "...";
 		}
 	}
 }

@@ -359,6 +359,8 @@ public class BB8MovementScript : Photon.MonoBehaviour
 		if (cube == "cube3") cube3.SetActive (false);
 		if (cube == "cube4") cube4.SetActive (false);
 
+		Debug.Log ("Stormtrooper" + cube [cube.Length - 1]);
+
 		GameObject st = GameObject.FindGameObjectWithTag ("Stormtrooper" + cube[cube.Length - 1]);
 		st.GetComponent<StormTrooperControl> ().Wakeup (playerID);
 	}

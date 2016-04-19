@@ -20,6 +20,8 @@ public class MainMenu : MonoBehaviour
     private ExitGames.Client.Photon.Hashtable roomProps = new ExitGames.Client.Photon.Hashtable() { {"p1", 3 } };
     string[] roomPropsInLobby = {"p1", "p2", "p3", "p4"};
     private TypedLobby defaultLobby = new TypedLobby("dexterlobby", LobbyType.Default);
+	public Text connect;
+	bool refreshed;
 
 	void Awake()
 	{
@@ -50,10 +52,11 @@ public class MainMenu : MonoBehaviour
 		int fontSize = 26;
 
 
-		if (!PhotonNetwork.connected)
-		{			
-			ShowConnectingGUI();
+		if (!PhotonNetwork.connected) {			
+			connect.text = "Connecting..";
 			return;   //Wait for a connection
+		} else {
+			connect.text = "";
 		}
 
 		if (PhotonNetwork.GetRoomList().Length == 0)
@@ -63,8 +66,10 @@ public class MainMenu : MonoBehaviour
 		}
 		else
 		{	
+			if (!refreshed) scroller.GetComponent<ScrollableList> ().refreshRooms ();
+			refreshed = true;
 			random.enabled = true;			
-			random.GetComponentInChildren<Text>().text="Random Room!";
+			random.GetComponentInChildren<Text>().text="<color=white>Random Room!</color>";
 		}
 
 		if (PhotonNetwork.room != null)
@@ -116,14 +121,6 @@ public class MainMenu : MonoBehaviour
 
 
 
-	}
-
-
-	void ShowConnectingGUI()
-	{
-		GUILayout.BeginArea(new Rect((Screen.width - 400) / 2, (Screen.height - 300) / 2, 400, 300));
-						GUILayout.Label("<size=35>Connecting to Photon server.</size>", GUILayout.Width(var1));
-		GUILayout.EndArea();
 	}
 
 	public void OnConnectedToMaster()

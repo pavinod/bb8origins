@@ -9,16 +9,14 @@ public class ScrollableList : MonoBehaviour
 	public int itemCount =3, columnCount = 1;
 	public Button refresh;
 
-	void OnGUI()
-	{
-
-
-
-	}
 	void Awake(){
 		refresh.onClick.AddListener (refreshRooms);
 	}
-	void refreshRooms(){
+	public void refreshRooms(){
+
+		var children = new List<GameObject>();
+		foreach (Transform child in transform) children.Add(child.gameObject);
+		children.ForEach(child => Destroy(child));
 
 		RectTransform rowRectTransform = itemPrefab.GetComponent<RectTransform>();
 		RectTransform containerRectTransform = gameObject.GetComponent<RectTransform>();
