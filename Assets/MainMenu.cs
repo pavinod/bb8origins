@@ -106,21 +106,6 @@ public class MainMenu : MonoBehaviour
 
 		});
 
-		quit.onClick.AddListener(()=> {
-			#if UNITY_STANDALONE
-			Application.Quit();
-			#endif
-
-			//If we are running in the editor
-			#if UNITY_EDITOR
-			//Stop playing the scene
-			UnityEditor.EditorApplication.isPlaying = false;
-			#endif
-		});
-
-
-
-
 	}
 
 	public void OnConnectedToMaster()

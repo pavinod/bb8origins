@@ -213,5 +213,8 @@ public class GameManager : Photon.MonoBehaviour {
         GUILayout.EndArea();
     }
 
+	void backToFirst(){
+		Application.LoadLevel (0);
+	}
     
 }
